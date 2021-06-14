@@ -121,7 +121,6 @@ export class DialogOverviewExampleDialog implements OnInit {
   public message;
   public status:boolean;
   public uri;
-  selected = 'option2';
   
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,

@@ -1,12 +1,9 @@
 <h1 mat-dialog-title >Hi {{data.name}}</h1>  
 <div class="row" style="text-align: center;">
 <div class="col-lg-3" >
- 
     <button mat-raised-button id="butonselect" class="gradient" (click)="option1()">
       <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/ad944b60-96dc-4ae5-9486-f981d5842975/dnmhds-5de87061-b831-4603-88c0-16d982819ace.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2FkOTQ0YjYwLTk2ZGMtNGFlNS05NDg2LWY5ODFkNTg0Mjk3NVwvZG5taGRzLTVkZTg3MDYxLWI4MzEtNDYwMy04OGMwLTE2ZDk4MjgxOWFjZS5naWYifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.SEphl4qUCzfEPzOlIbD0E0dACrOBWrdOmPmQl1VimO4" alt="" id="avatar">
     </button>
-
-  
 </div>
 <div class="col-lg-3">
   <button mat-raised-button id="butonselect" class="gradient" (click)="option2()">
@@ -50,4 +47,3 @@
   <button mat-button (click)="onNoClick()">No Thanks</button>
   <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
 </div>
-<input matInput type="text" [(ngModel)]="selected" name="name" #name="ngModel" autocomplete="off">
