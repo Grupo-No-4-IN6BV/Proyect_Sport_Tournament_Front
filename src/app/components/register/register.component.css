@@ -1,0 +1,61 @@
+#login{
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 10%;
+}
+
+#form{
+    background-color: white;
+    border-radius: 10px;
+    color: black;
+    padding: 15px;
+    opacity: 0.9;
+}
+
+.form-signin{
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+    max-width: 400px;
+}
+
+input{
+    text-align: center;
+    color: black;
+    opacity: 0.5;
+}
+
+#terminos{
+    font-size: 85%;
+}
+
+
+.form-signin .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+}
+
+button{
+    margin-top: 25px;
+    border-radius: 10px;
+    border: none;
+    background-color: darkcyan;
+}
+
+button:hover{
+    transition: all 1s;
+    background-color: antiquewhite;
+    
+}
+
+a{
+    text-decoration: none;
+    color: #3F98BD;
+}

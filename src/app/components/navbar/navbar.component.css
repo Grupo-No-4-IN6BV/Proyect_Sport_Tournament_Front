@@ -1,0 +1,29 @@
+.navbar-brand{
+    margin-left: 15px;
+}
+
+
+
+a.sidenav-button{
+    display: inline;
+    color: rgba(255, 255, 255, .5);
+    size: 9x;
+}
+
+a.sidevar-button:hover {
+    color: rgba(255, 255, 255, .8);
+    transition:  all .3s ease 0s;
+}
+
+.navbar .photo{
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    vertical-align: middle;
+    overflow: hidden;
+}
+
+.navbar .photo img{
+    width: 100%;
+}

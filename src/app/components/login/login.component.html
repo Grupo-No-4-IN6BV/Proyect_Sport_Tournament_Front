@@ -1,0 +1,19 @@
+<div class="m-0  row justify-content-center align-items-center">
+    <div class="p-5 text-center">
+        <div [@fadeIn] id="login" class="text-center" >
+            <form id="form" class="form-signin" #login="ngForm" (ngSubmit)="onSubmit()">
+                <br>
+                <img width="115" height="115" class="mb-4" src="../../../assets/img/user.png" alt="user">
+                <h1>Inicio de sesión</h1>
+                <label class="sr-only" for="inputUsername"></label>
+                <input [(ngModel)]="user.username" name="username" class="form-control" type="text" id="inputUsername" placeholder="Usuario" autocomplete="off" required>
+                <label class="sr-only" for="inputPassword"></label>
+                <input [(ngModel)]="user.password" name="password" class="form-control" type="password" id="inputPassword" placeholder="Contraseña" required>
+                <button class="btn btl-lg btn-primary btn-block" type="submit" [disabled]="!login.form.valid" >Iniciar sesión</button><br>
+                <hr>
+                <label for="">Aún no posees una cuenta?</label><br>
+                <a routerLink="/register">Regístrate</a><br>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<div [@fadeIn] class="m-0  row justify-content-center align-items-center">
+    <div class="col-auto  p-5 text-center">     
+            <div id="login" class="text-center ">
+                <form  #register="ngForm" (ngSubmit)="onSubmit(register)" id="form" class="form-signin">
+                    <br>
+                    <img width="115" height="115" class="mb-4" src="../../../assets/img/user.png" alt="user">
+                    <h1>Registrarse</h1>
+                    <label class="sr-only" for="inputUsername"></label>
+                    <input [(ngModel)]="user.username" name="username" #username="ngModel" class="form-control" type="text" id="inputUsername" placeholder="Usuario" autocomplete="off" required>
+                    <label class="sr-only" for="inputPassword"></label>
+                    <input [(ngModel)]="user.password" name="password" #password="ngModel" class="form-control" type="password" id="inputPassword" placeholder="Contraseña" required>
+                    <label class="sr-only" for="inputEmail"></label>
+                    <input [(ngModel)]="user.email" name="email" #email="ngModel" class="form-control" type="text" id="inputEmail" placeholder="Email" required>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="sr-only" for="inputName"></label>
+                            <input [(ngModel)]="user.name" name="name" #name="ngModel"   class="form-control" type="text" id="inputName" placeholder="Nombre" autocomplete="off" required>
+                        </div>
+                    </div>
+                    <label class="sr-only" ></label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck">
+                        <label id="terminos" class="form-check-label" for="gridCheck">Al registrarte, aceptas nuetras Condiciones, la Politica de datos y Politica de Cookies</label>
+                    </div>
+                    <button class="btn btl-lg btn-primary btn-block" type="submit" [disabled]="!register.form.valid" >Crear cuenta</button>
+                    <p></p>
+                    <hr>
+                    <label for="">Ya estás registrado?</label><br>
+                    <a routerLink="/register">Inicia sesión</a>
+                </form>
+            </div>      
+    </div>
+</div>
