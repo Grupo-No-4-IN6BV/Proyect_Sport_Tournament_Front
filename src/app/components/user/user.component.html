@@ -17,7 +17,7 @@
             <mat-card-content>
                 <h5 style="font: bold;">Nombre</h5>
                 <mat-form-field *ngIf="this.edit==true" class="example-form-field" style="margin-left: 20px; width: 90%;">
-                    <input matInput type="text" [(ngModel)]="user.name" name="name" #name="ngModel" autocomplete="off">
+                    <input matInput type="text" [(ngModel)]="value" name="name" #name="ngModel" autocomplete="off">
                     <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''" >
                       <mat-icon>close</mat-icon>
                     </button>
@@ -25,7 +25,7 @@
                 <h3 style="margin-left: 20px;" *ngIf="this.edit==false">arnol shuasheneghuer</h3>
                 <h5>Username</h5>
                 <mat-form-field *ngIf="this.edit==true"  class="example-form-field" style="margin-left: 20px; width: 90%;">
-                    <input matInput type="text" [(ngModel)]="user.username" name="username" #username="ngModel" autocomplete="off" >
+                    <input matInput type="text" [(ngModel)]="value" name="username" #username="ngModel" autocomplete="off" >
                     <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
                       <mat-icon>close</mat-icon>
                     </button>

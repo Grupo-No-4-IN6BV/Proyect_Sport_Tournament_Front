@@ -54,6 +54,7 @@ export class UserComponent implements OnInit {
   selector: 'dialog-overview-example-dialog',
   templateUrl: 'dialog-overview-example-dialog.html',
   styleUrls: ['./user.component.css'],
+  animations: [fadeIn]
 })
 export class DialogOverviewExampleDialog {
 
