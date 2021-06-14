@@ -1,33 +1,34 @@
-<div [@fadeIn] class="m-0  row justify-content-center align-items-center">
-    <div class="col-auto  p-5 text-center">     
-            <div id="login" class="text-center ">
-                <form  #register="ngForm" (ngSubmit)="onSubmit(register)" id="form" class="form-signin">
-                    <br>
-                    <img width="115" height="115" class="mb-4" src="../../../assets/img/user.png" alt="user">
-                    <h1>Registrarse</h1>
-                    <label class="sr-only" for="inputUsername"></label>
-                    <input [(ngModel)]="user.username" name="username" #username="ngModel" class="form-control" type="text" id="inputUsername" placeholder="Usuario" autocomplete="off" required>
-                    <label class="sr-only" for="inputPassword"></label>
-                    <input [(ngModel)]="user.password" name="password" #password="ngModel" class="form-control" type="password" id="inputPassword" placeholder="Contraseña" required>
-                    <label class="sr-only" for="inputEmail"></label>
-                    <input [(ngModel)]="user.email" name="email" #email="ngModel" class="form-control" type="text" id="inputEmail" placeholder="Email" required>
-                    <div class="row">
-                        <div class="form-group col-md-12">
-                            <label class="sr-only" for="inputName"></label>
-                            <input [(ngModel)]="user.name" name="name" #name="ngModel"   class="form-control" type="text" id="inputName" placeholder="Nombre" autocomplete="off" required>
-                        </div>
-                    </div>
-                    <label class="sr-only" ></label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                        <label id="terminos" class="form-check-label" for="gridCheck">Al registrarte, aceptas nuetras Condiciones, la Politica de datos y Politica de Cookies</label>
-                    </div>
-                    <button class="btn btl-lg btn-primary btn-block" type="submit" [disabled]="!register.form.valid" >Crear cuenta</button>
-                    <p></p>
-                    <hr>
-                    <label for="">Ya estás registrado?</label><br>
-                    <a routerLink="/register">Inicia sesión</a>
-                </form>
-            </div>      
-    </div>
-</div>
+<div [@fadeIn] class=" row justify-content-center align-items-center">
+    <mat-card style="width: 400px;">
+      <form >
+          <br>
+          <img src="https://steamuserimages-a.akamaihd.net/ugc/527258867810910446/7F57DE98061D20B5E18094669C177E75581B9D84/" alt="">
+          <h1>Registrar</h1>
+          <mat-form-field style="width: 100%;">
+            <mat-label for="inputUsername">Username</mat-label>
+                <input type="text" matInput required autocomplete="off">
+            </mat-form-field>
+            <mat-form-field style="width: 100%;">
+              <mat-label for="inputUsername">Nombre Completo</mat-label>
+              <input type="text" matInput required autocomplete="off">
+            </mat-form-field>
+            <mat-form-field style="width: 100%;">
+              <mat-label for="inputPassword">Contraseña</mat-label>
+              <input type="text" matInput required autocomplete="off">
+            </mat-form-field>
+            <mat-form-field style="width: 100%;">
+                <mat-label for="inputUsername">Email</mat-label>
+                <input type="text" matInput required autocomplete="off">
+            </mat-form-field>
+              <div class="form-check">
+                <label id="terminos" class="form-check-label" for="gridCheck" style="font-size: 12px; width: 100%;"><mat-checkbox></mat-checkbox>&nbsp;&nbsp; Al registrarte, aceptas nuetras Condiciones, la Politica de datos y Politica de Cookies</label>
+            </div>  
+          <button mat-raised-button color="accent" style="justify-content: center;margin-top: 15px;" type="submit">Iniciar sesión</button><br>
+          <hr>
+          <label>¿Ya posees una cuenta?</label><br>
+          <a routerLink="/login">Registrarse</a><br>
+      </form>
+  </mat-card>
+  </div>
+  
+  

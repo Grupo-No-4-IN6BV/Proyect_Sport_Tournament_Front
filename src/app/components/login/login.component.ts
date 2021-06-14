@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { RestUserService } from 'src/app/services/restUser/rest-user.service';
 import { fadeIn } from '../../animations/animations';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -10,13 +11,19 @@ import { fadeIn } from '../../animations/animations';
   styleUrls: ['./login.component.css'],
   animations: [fadeIn]
 })
+
+
+
 export class LoginComponent implements OnInit {
+
+  horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   public user: User;
   public token: string;
   public message;
 
-  constructor(private restUser: RestUserService, private router: Router) {
+  constructor(private restUser: RestUserService, private router: Router, public snackBar: MatSnackBar) {
     this.user = new User('','','', '', '', 'ROLE_USER', '', null);
    }
 
@@ -28,7 +35,12 @@ export class LoginComponent implements OnInit {
     this.restUser.login(this.user, 'true').subscribe((res:any)=>{
       this.message = res.message;
       if(!res.token){
-        alert(this.message)
+        this.snackBar.open(this.message, 'cerrar', {
+          duration: 2000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          panelClass: ['mat-toolbar', 'mat-warn']
+        });
       }else{
         delete res.user.password;
         this.token = res.token;
@@ -38,7 +50,13 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('token', this.token)
           localStorage.setItem('user', JSON.stringify(res.user));
           console.log(res.user, res.token);
-          alert('Usuario logeado exitosamente')
+          this.snackBar.open(this.message, 'cerrar', {
+            duration: 2000,
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            panelClass: ['mat-toolbar', 'mat-accent']
+          });
+          this.router.navigateByUrl('administration')
         }
       }
     },
@@ -47,3 +65,5 @@ export class LoginComponent implements OnInit {
   }
 
 }
+
+

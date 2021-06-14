@@ -1,24 +1,37 @@
-
-<section id="hero" class="hero d-flex align-items-center" >
-
+<head>
+  <link rel="preconnect" href="https://fonts.gstatic.com"> 
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet"> 
+</head>
+<section id="hero" class="hero d-flex align-items-center">
     <div class="container" >
-      <div class="row">
-        <div class="col-lg-4 d-flex flex-column justify-content-center">
-          <h1 data-aos="fade-up">We offer modern solutions for growing your business</h1>
-          <h2 data-aos="fade-up" data-aos-delay="400">We are team of talented designers making websites with Bootstrap</h2>
+      <div class="row" >
+        <div class="col-lg-6 d-flex flex-column justify-content-center" id="mid">
+          <h1 data-aos="fade-up" style="font-size: 5vh;">Proyecto III Bimestre:</h1>
+          <h1 data-aos="fade-up" style="font-size: 3vh;">Control Torneo Deportivo</h1>
+          <h3 data-aos="fade-up" data-aos-delay="400" style="font-size: 2vh;"> Consiste en poder llevar el control de un Torneo Deportivo, únicamente Ligas.</h3>
           <div data-aos="fade-up" data-aos-delay="600">
-            <div class="text-center text-lg-start">
-              <a  class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
-                <button (click)="createComponentL()" type="button" class="btn btn-primary">Iniciar Sesion</button>
-                <button (click)="createComponentR()" type="button" class="btn btn-secondary">Registrarse</button>
+            <div class="btns">
+              <a  class=" align-items-center ">
+                <button   (click)="createComponentL()" type="button" id="b1">Iniciar Sesion</button>
+                <button   (click)="createComponentR()" type="button" id="b2">Registrarse</button>
               </a>
             </div>
           </div>
         </div>
-        <div class="col-lg-8" >
-            <ng-template #appChangesLR></ng-template>
+        <div class="col-lg-6" id="logs">
+          <div *ngIf="this.imgH=='true'" class="row justify-content-center">
+            <img src="../../../assets/img/omen.png" alt="" style="width: 55vh;">
           </div>
+          <ng-template #appChangesLR></ng-template>
+        </div>
       </div>
-    </div>
-    
-  </section>
+    </div>    
+</section>
+
+
+
+
+
+
+
+  

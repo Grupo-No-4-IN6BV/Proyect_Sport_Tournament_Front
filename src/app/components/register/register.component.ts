@@ -15,8 +15,9 @@ export class RegisterComponent implements OnInit {
   public user: User;
   public message;
   public userSaved:string;
+  public token: string;
 
-  constructor(private userService:RestUserService, private router: Router) { 
+  constructor(private userService:RestUserService, private router: Router, private restUser: RestUserService) { 
     this.user = new User('','','', '', '', 'ROLE_USER', '', null);
   }
 
@@ -30,6 +31,7 @@ export class RegisterComponent implements OnInit {
       if(res.userSaved){
         this.userSaved = res.userSaved.username
         alert(this.message);
+        this.login();
         register.reset();
       }else{
         alert(this.message);
@@ -38,5 +40,27 @@ export class RegisterComponent implements OnInit {
     error=> console.log(<any>error)
     )
   }
+
+  login(){
+    this.restUser.login(this.user, 'true').subscribe((res:any)=>{
+      this.message = res.message;
+      if(!res.token){
+        alert(this.message)
+      }else{
+        delete res.user.password;
+        this.token = res.token;
+        if(this.token.length <= 0){
+          alert('el Token no se genero de manera correcta')
+        }else{
+          localStorage.setItem('token', this.token)
+          localStorage.setItem('user', JSON.stringify(res.user));
+          this.router.navigateByUrl('administration')
+        }
+      }
+    },
+    error=> this.message = error.error.message
+    )
+  }
+
 
 }
