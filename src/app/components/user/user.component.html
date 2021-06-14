@@ -1,5 +1,6 @@
 <div [@fadeIn] class="row justify-content-center" this.edit='true'>
     <mat-card class="gradient-border" id="cardP" >
+      <form class="form-signin" #updateUser="ngForm" (ngSubmit)="update()">
       <mat-card-header>
         <mat-card-title style="font-size: 25px; margin-top: 25px; margin-bottom: 25px;" *ngIf="this.edit==false">
             Perfil
@@ -10,36 +11,40 @@
     </mat-card-header>
     <div class="row">
         <div class="col-lg-6" style="text-align: center;">
-            <img mat-card-image src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/25c93289-0576-4645-bc48-e828abec9740/ddghjn9-d7362794-7f82-47cc-b350-d72f548ed287.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzI1YzkzMjg5LTA1NzYtNDY0NS1iYzQ4LWU4MjhhYmVjOTc0MFwvZGRnaGpuOS1kNzM2Mjc5NC03ZjgyLTQ3Y2MtYjM1MC1kNzJmNTQ4ZWQyODcuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.DEZrA9fDExdnp_yXJb7a318YRdIUKHzpBKUOSdib4eU">
-            <button *ngIf="this.edit==true" mat-raised-button color="warn"  style="background: #4e42f5;" (click)="openDialog()">Cambiar avatar</button>
+            <img  *ngIf="user.image" id="imgUser" src="{{user.image}}" alt="user image">
+            <button *ngIf="this.edit==true" type="button" mat-raised-button color="warn"  style="background: #4e42f5;" (click)="editarbtn()" (click)="openDialog()">Cambiar avatar</button>
         </div>
         <div class="col-lg-6">
             <mat-card-content>
                 <h5 style="font: bold;">Nombre</h5>
                 <mat-form-field *ngIf="this.edit==true" class="example-form-field" style="margin-left: 20px; width: 90%;">
-                    <input matInput type="text" [(ngModel)]="value" name="name" #name="ngModel" autocomplete="off">
+                    <input matInput type="text" [(ngModel)]="user.name" name="name"  autocomplete="off">
                     <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''" >
                       <mat-icon>close</mat-icon>
                     </button>
                   </mat-form-field>
-                <h3 style="margin-left: 20px;" *ngIf="this.edit==false">arnol shuasheneghuer</h3>
+                <h3 style="margin-left: 20px;" *ngIf="this.edit==false">{{user.name}}</h3>
                 <h5>Username</h5>
                 <mat-form-field *ngIf="this.edit==true"  class="example-form-field" style="margin-left: 20px; width: 90%;">
-                    <input matInput type="text" [(ngModel)]="value" name="username" #username="ngModel" autocomplete="off" >
+                    <input matInput type="text" [(ngModel)]="user.username" name="username" #username="ngModel" autocomplete="off">
                     <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
                       <mat-icon>close</mat-icon>
                     </button>
                   </mat-form-field>
-                <h3 style="margin-left: 20px;" *ngIf="this.edit==false">Javirots</h3>
+                <h3 style="margin-left: 20px;" *ngIf="this.edit==false">{{user.username}}</h3>
                 <h5>Email</h5>
-                <h3 style="margin-left: 20px;">javirots@gmail.com</h3>
+                <h3 style="margin-left: 20px;">{{user.email}}</h3>
+                
+
             </mat-card-content>
         </div>
     </div>
     <mat-card-actions style="text-align: right; margin-bottom: 15px; margin-right: 15px;">
-        <button mat-raised-button color="primary" (click)="editarbtn()">Actualizar Cuenta</button>
+        <button *ngIf="this.edit==false" mat-raised-button color="primary" (click)="editarbtn()" >Actualizar Cuenta</button>
+        <button *ngIf="this.edit==true" mat-raised-button color="accent" [disabled]="!updateUser.form.valid">Confirmar</button>
         <button *ngIf="this.edit==false" mat-raised-button color="warn" >Eliminar Cuenta</button>
         <button *ngIf="this.edit==true" mat-raised-button color="warn" (click)="canceledit()">Cancelar Acualización</button>
     </mat-card-actions>
+  </form>
     </mat-card>
   </div>

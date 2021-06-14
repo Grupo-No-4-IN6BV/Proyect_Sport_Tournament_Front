@@ -1,12 +1,12 @@
-<div class="sidenav">
+<div class="sidenav" *ngIf="token != null">
     <div class="logo">
         <a href="/" class="simple-text logo-mini">
             <div class="logo-img">
-                <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/25c93289-0576-4645-bc48-e828abec9740/ddghjn9-d7362794-7f82-47cc-b350-d72f548ed287.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzI1YzkzMjg5LTA1NzYtNDY0NS1iYzQ4LWU4MjhhYmVjOTc0MFwvZGRnaGpuOS1kNzM2Mjc5NC03ZjgyLTQ3Y2MtYjM1MC1kNzJmNTQ4ZWQyODcuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.DEZrA9fDExdnp_yXJb7a318YRdIUKHzpBKUOSdib4eU" alt="" style="width: 250px;" >
+                <img src="{{user.image}}" alt="" style="width: 250px;" >
             </div>
         </a>
         <a href="/" class="simple-text logo-normal">
-            <span style="font-size: 18px; text-align: center;">arnol shuiashener</span>
+            <span style="font-size: 18px; text-align: center;">{{user.username}}</span>
         </a>
     </div>
    <mat-action-list>
@@ -19,6 +19,6 @@
         <button mat-list-item routerLink="/user"><span class="material-icons" id="icohome">person_pin</span> Personal </button>
         <mat-divider></mat-divider>
         <button mat-list-item routerLink="/user"><span class="material-icons" id="icons" >manage_accounts</span> Perfil </button>
-        <button mat-list-item routerLink="/" (click)="inputSideNav.toggle(false)"><span class="material-icons" id="icons" >login</span> Cerrar Sesión </button>
+        <button mat-list-item routerLink="/" (click)="inputSideNav.toggle(false)" (click)="logOut()"><span class="material-icons" id="icons" >login</span> Cerrar Sesión </button>
     </mat-action-list>
 </div>

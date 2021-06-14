@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
 import { fadeIn } from 'src/app/animations/animations';
 
 @Component({
@@ -9,6 +10,8 @@ import { fadeIn } from 'src/app/animations/animations';
 })
 export class AdministrationComponent implements OnInit {
 
+  @Input() inputSideNav: MatSidenav;
+  
   value = '';
   public edit:boolean = false;
 

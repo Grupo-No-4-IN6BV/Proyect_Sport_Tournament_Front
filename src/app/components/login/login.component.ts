@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { RestUserService } from 'src/app/services/restUser/rest-user.service';
 import { fadeIn } from '../../animations/animations';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-login',
@@ -22,14 +23,16 @@ export class LoginComponent implements OnInit {
   public user: User;
   public token: string;
   public message;
+  @Input() inputSideNav: MatSidenav ;
 
   constructor(private restUser: RestUserService, private router: Router, public snackBar: MatSnackBar) {
     this.user = new User('','','', '', '', 'ROLE_USER', '', null);
    }
 
   ngOnInit(): void {
-    
+ 
   }
+
 
   onSubmit(){
     this.restUser.login(this.user, 'true').subscribe((res:any)=>{
