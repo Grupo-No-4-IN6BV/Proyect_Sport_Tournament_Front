@@ -1,12 +1,17 @@
 <form #saveLeague="ngForm" (ngSubmit)="onSubmit(saveLeague)">
+    <h2>Agregar Liga</h2>
     <mat-form-field  class="example-form-field" style="margin-left: 20px; width: 90%;">
-        <input matInput type="text" [(ngModel)]="league.name" type="text" id="passwordRemoved" name="name" autocomplete="off">
+      
+        <input matInput type="text" [(ngModel)]="league.name" type="text" id="passwordRemoved" name="name" placeholder="Nombre de Liga" autocomplete="off">
       </mat-form-field>
       <mat-form-field  class="example-form-field" style="margin-left: 20px; width: 90%;">
-        <input matInput type="text" [(ngModel)]="league.image" type="test" id="passwordRemoved" name="name" autocomplete="off">
+        <input matInput type="text" [(ngModel)]="league.image" type="test" id="passwordRemoved" name="name" placeholder="URL de Imagen" autocomplete="off">
         
-      </mat-form-field>
-      <p>previsualizacion de imagen</p>
+      </mat-form-field><br><br>
+      <p>Previsualización de Imagen:</p><br>
+      <div class="subida">
         <img src="{{league.image}}" alt="">
-      <button type="submit" mat-flat-button color="accent">Añadir habitación</button>
+        <button type="submit" mat-flat-button color="accent">Agregar liga</button>
+      </div>
+        
 </form>

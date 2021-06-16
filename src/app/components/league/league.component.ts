@@ -1,7 +1,7 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { fadeIn } from 'src/app/animations/animations';
+import { fadeIn, largein } from 'src/app/animations/animations';
 import { League } from 'src/app/models/league';
 import { RestLeagueService } from 'src/app/services/restLeague/rest-league.service';
 import { RestUserService } from 'src/app/services/restUser/rest-user.service';
@@ -18,7 +18,10 @@ export interface DialogData {
   selector: 'app-league',
   templateUrl: './league.component.html',
   styleUrls: ['./league.component.css'],
-  animations: [fadeIn],
+  animations: [
+    fadeIn,
+    largein
+  ],
 })
 export class LeagueComponent implements OnInit {
 
@@ -32,12 +35,12 @@ export class LeagueComponent implements OnInit {
   imageleagueSelected: String;
   
 
-  constructor(private restUser:RestUserService,  private restLeague:RestLeagueService, public dialog: MatDialog) {
+  constructor(private restUser:RestUserService, private router:Router,  private restLeague:RestLeagueService, public dialog: MatDialog) {
     this.parentMessage = "message from parent"
   }
 
   ngOnInit(): void {
-    this.leagueSelected = new League('','','');
+    this.leagueSelected = new League('','','',[]);
     this.user = this.restUser.getUser();
     this.leagues = this.user.leagues;
     console.log(this.leagues)
@@ -51,14 +54,20 @@ export class LeagueComponent implements OnInit {
     console.log(league)
   }
 
+  goTeam(league){
+    this.leagueSelected = league;
+    localStorage.setItem('league', JSON.stringify(league));
+    this.router.navigateByUrl('league/teams');
+  }
+
   prueba(){
     this.ngOnInit()
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(LeagueSaveComponent, {
-      height: '450px',
-      width: '800px',
+      height: '330px',
+      width: '400px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -69,8 +78,8 @@ export class LeagueComponent implements OnInit {
 
   openDelete(): void {
     const dialogRef = this.dialog.open(LeagueRemoveComponent, {
-      height: '450px',
-      width: '800px',
+      height: '280px',
+      width: '400px',
       data: {name: this.nameleagueSelected, id: this.idleagueSelected}
     });
 
@@ -85,7 +94,6 @@ export class LeagueComponent implements OnInit {
       width: '800px',
       data: {name: this.nameleagueSelected, id: this.idleagueSelected}
     });
-
     dialogRef.afterClosed().subscribe(result => {
       this.ngOnInit();
     });
@@ -200,7 +208,7 @@ export class LeagueSaveComponent implements OnInit {
   }
 
   constructor(private restUser:RestUserService, private router:Router, private restLeague:RestLeagueService) {
-    this.league = new League('','','');
+    this.league = new League('','','',[]);
     this.user = JSON.parse(localStorage.getItem('user'));
    }
 

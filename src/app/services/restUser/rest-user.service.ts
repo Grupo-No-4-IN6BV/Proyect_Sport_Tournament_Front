@@ -79,4 +79,13 @@ export class RestUserService {
     .pipe(map(this.extractData))
   }
 
+  getUsers(){
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.getToken()
+    });
+    return this.http.get(this.uri+ 'getUsers', {headers: headers})
+    .pipe(map(this.extractData))
+  }
+
 }

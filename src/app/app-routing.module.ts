@@ -7,7 +7,9 @@ import { ListUsersComponent } from './components/list-users/list-users.component
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
+import { TeamComponent } from './components/team/team.component';
 import { UserComponent } from './components/user/user.component';
+import { UsersComponent } from './components/users/users.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -19,6 +21,8 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent },
   {path: 'statistics', component: StatisticsComponent},
   {path: 'user', component: UserComponent},
+  {path: 'users', component: UsersComponent},
+  {path: 'league/teams', component: TeamComponent}
 ];
 
 @NgModule({

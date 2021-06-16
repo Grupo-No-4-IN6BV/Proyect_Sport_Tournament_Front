@@ -1,84 +1,60 @@
 
 
-    <div class="container-home" >   
-        <div [@fadeIn] class="m-0  row justify-content-center align-items-center">  
-            <div class="container">
-                <a (click)="inputSideNav.toggle()">
-                    <div id="card1" class="card">
-                        <img class="cimg" id="img1" src="{{log1}}" alt="">
-                    </div>   
-                </a>    
-                <a routerLink="/list-users" (click)="inputSideNav.toggle()">
+    <div class="container-home" class="row">   
+        <div [@fadeIn] class="m-0 justify-content-center align-items-center"> 
+            <STYLE>a {text-decoration: none;} </STYLE> 
+
+            <div class="container ">
+               <div class="row">
+                <div class="col-lg-3" >
+                    <a routerLink="/league" (click)="inputSideNav.toggle()">
+                        <div id="card1" class="card">
+                            <img class="cimg" id="img1" src="{{log1}}" alt="">
+                            <a class="txt">TORNEOS</a>
+                        </div>   
+            </a> 
+        </div>
+            <div class="col-lg-3">
+                <a routerLink="/users" (click)="inputSideNav.toggle()">
                     <div id="card2" class="card">
                         <img class="cimg" id="img2" src="{{log2}}" alt="">
+                        <a class="txt" id="txt2">USUARIOS</a>
                     </div>
                 </a>    
-                <a routerLink="/stastitics"  (click)="inputSideNav.toggle()">
+            </div>
+
+            <div class="col-lg-3">
+                <a routerLink="/statistics"  (click)="inputSideNav.toggle()">
                     <div id="card3" class="card">
                         <img class="cimg" id="img3" src="{{log3}}" alt="">
+                        <a class="txt" id="txt3">HISTORIAL</a>
                     </div>
                 </a>     
-                <a href="#" (click)="inputSideNav.toggle()">
-                    <div id="card4" class="card">
-                        <img class="cimg" id="img4" src="{{log4}}" alt="">
-                    </div>
-                </a>
+            </div>
+            <div class="col-lg-3">
+            <a routerLink="/statistics"  (click)="inputSideNav.toggle()">
+                <div id="card4" class="card">
+                    <img class="cimg" id="img4" src="{{log4}}" alt="">
+                    <a class="txt">ESTADISTICAS</a>
+                </div>
+            </a>
+            </div> 
+               </div>
+                
+               
+              
             </div>
         </div>
     </div>   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!--
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="stylesheet"/>
-</head> 
-<div class="container-home">   
-    <div [@fadeIn] class="m-0  row justify-content-center align-items-center">
-        <div id="DGeneral" class="justify-content-center">
-           
-            <div id="con1">
-                <a href="#" id="btn1"  class="btn">EQUIPOS</a>
-            </div> 
-
-            <div id="con2">
-                <a href="#" id="btn2"  class="btn">EQUIPOS</a>
-            </div> 
-
+    
+    <div class="row">
+        <div class="col-lg-3">
+            
         </div>
-
-        <div id="DGenera3">
-            <div id="con3">
-                <a href="#" id="btn3" class="btn">HISTORIAL</a>
-            </div> 
-
-            <div class="con4">
-                <a href="#" id="btn4"  class="btn">ESTADISTICAS</a>
-            </div> 
-
-        </div>        
+        <div class="col-lg-6">
+            
+        </div>
     </div>
-</div>  -->
-  
 
+-->

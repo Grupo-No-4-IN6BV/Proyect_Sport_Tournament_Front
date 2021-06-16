@@ -18,6 +18,21 @@
     background-color: rgb(30, 39, 70);
   }
 
+  h2{
+    align-items: center;
+    text-align: center;
+  }
+
+  .subida {
+    text-align: center;
+    align-items: center;
+  }
+
+  .eliminar{
+    text-align: center;
+    align-items: center;
+  }
+
   .mat-accordion, .mat-expansion-panel{
     background-color: #1c162f;
   }

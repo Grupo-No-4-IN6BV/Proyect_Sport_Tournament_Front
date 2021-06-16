@@ -19,6 +19,7 @@ import { DialogOverviewExampleDialog, UserComponent, UserdeleteComponent } from 
 import { MaterialModule } from './styles/material.module';
 import { UsersComponent } from './components/users/users.component';
 import { ListUsersComponent } from './components/list-users/list-users.component';
+import { TeamComponent } from './components/team/team.component';
 
 
 
@@ -41,6 +42,7 @@ import { ListUsersComponent } from './components/list-users/list-users.component
     LeagueUpdateComponent,
     UsersComponent,
     ListUsersComponent,
+    TeamComponent,
 
   ],
   entryComponents: [

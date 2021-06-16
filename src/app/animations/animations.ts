@@ -13,3 +13,14 @@ export const fadeIn = trigger('fadeIn', [
       ])
     
     ])
+export const largein = trigger('largein', [
+      state('void', style({
+        opacity: 0
+      })),
+      transition(':enter', [
+          animate(300,style({
+              opacity:1
+          })),
+      ])
+    
+    ])
