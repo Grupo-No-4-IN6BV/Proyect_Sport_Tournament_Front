@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { RestUserService } from 'src/app/services/restUser/rest-user.service';
 import { fadeIn } from '../../animations/animations';
@@ -17,7 +18,7 @@ export class RegisterComponent implements OnInit {
   public userSaved:string;
   public token: string;
 
-  constructor(private userService:RestUserService, private router: Router, private restUser: RestUserService) { 
+  constructor(private userService:RestUserService, private router: Router, private restUser: RestUserService, public snackBar: MatSnackBar) { 
     this.user = new User('','','', '', '', 'ROLE_USER', '', null);
   }
 
@@ -25,13 +26,19 @@ export class RegisterComponent implements OnInit {
   }
   
   onSubmit(register){
-    console.log(this.user);
+    console.log(this.user.image)
     this.userService.register(this.user).subscribe((res:any)=>{
       this.message = res.message;
       if(res.userSaved){
         this.userSaved = res.userSaved.username
-        alert(this.message);
+        this.snackBar.open('Usuario registrado correctamente', 'cerrar', {
+          duration: 2000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['mat-toolbar', 'mat-accent']
+        });
         this.login();
+        
         register.reset();
       }else{
         alert(this.message);

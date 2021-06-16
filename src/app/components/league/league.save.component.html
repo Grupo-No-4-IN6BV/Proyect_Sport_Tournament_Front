@@ -1,0 +1,12 @@
+<form #saveLeague="ngForm" (ngSubmit)="onSubmit(saveLeague)">
+    <mat-form-field  class="example-form-field" style="margin-left: 20px; width: 90%;">
+        <input matInput type="text" [(ngModel)]="league.name" type="text" id="passwordRemoved" name="name" autocomplete="off">
+      </mat-form-field>
+      <mat-form-field  class="example-form-field" style="margin-left: 20px; width: 90%;">
+        <input matInput type="text" [(ngModel)]="league.image" type="test" id="passwordRemoved" name="name" autocomplete="off">
+        
+      </mat-form-field>
+      <p>previsualizacion de imagen</p>
+        <img src="{{league.image}}" alt="">
+      <button type="submit" mat-flat-button color="accent">Añadir habitación</button>
+</form>

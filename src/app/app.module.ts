@@ -2,7 +2,6 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSidenavModule } from '@angular/material/sidenav';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -14,11 +13,12 @@ import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AdministrationComponent } from './components/administration/administration.component';
-import { ListUsersComponent } from './components/list-users/list-users.component';
-import { LeagueComponent } from './components/league/league.component';
+import { LeagueComponent, LeagueRemoveComponent, LeagueSaveComponent, LeagueUpdateComponent } from './components/league/league.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
-import { DialogOverviewExampleDialog, UserComponent } from './components/user/user.component';
+import { DialogOverviewExampleDialog, UserComponent, UserdeleteComponent } from './components/user/user.component';
 import { MaterialModule } from './styles/material.module';
+import { UsersComponent } from './components/users/users.component';
+import { ListUsersComponent } from './components/list-users/list-users.component';
 
 
 
@@ -31,11 +31,17 @@ import { MaterialModule } from './styles/material.module';
     RegisterComponent,
     LoginComponent,
     AdministrationComponent,
-    ListUsersComponent,
     LeagueComponent,
     StatisticsComponent,
     UserComponent,
     DialogOverviewExampleDialog,
+    UserdeleteComponent,
+    LeagueSaveComponent,
+    LeagueRemoveComponent,
+    LeagueUpdateComponent,
+    UsersComponent,
+    ListUsersComponent,
+
   ],
   entryComponents: [
     RegisterComponent,

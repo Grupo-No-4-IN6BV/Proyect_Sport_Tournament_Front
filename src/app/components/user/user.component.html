@@ -11,8 +11,10 @@
     </mat-card-header>
     <div class="row">
         <div class="col-lg-6" style="text-align: center;">
-            <img  *ngIf="user.image" id="imgUser" src="{{user.image}}" alt="user image">
-            <button *ngIf="this.edit==true" type="button" mat-raised-button color="warn"  style="background: #4e42f5;" (click)="editarbtn()" (click)="openDialog()">Cambiar avatar</button>
+            <img  *ngIf="user.image" id="imgUser" src="{{user.image}}" alt="user image" style="width: 200px;">
+            <div style="margin-top: 15px;">
+              <button *ngIf="this.edit==true" type="button" mat-raised-button color="warn"  style="background: #4e42f5;" (click)="editarbtn()" (click)="openDialog()">Cambiar avatar</button>
+            </div>
         </div>
         <div class="col-lg-6">
             <mat-card-content>
@@ -42,7 +44,7 @@
     <mat-card-actions style="text-align: right; margin-bottom: 15px; margin-right: 15px;">
         <button *ngIf="this.edit==false" mat-raised-button color="primary" (click)="editarbtn()" >Actualizar Cuenta</button>
         <button *ngIf="this.edit==true" mat-raised-button color="accent" [disabled]="!updateUser.form.valid">Confirmar</button>
-        <button *ngIf="this.edit==false" mat-raised-button color="warn" >Eliminar Cuenta</button>
+        <button *ngIf="this.edit==false" mat-raised-button color="warn" (click)="openDialog2()" type="button">Eliminar Cuenta</button>
         <button *ngIf="this.edit==true" mat-raised-button color="warn" (click)="canceledit()">Cancelar Acualización</button>
     </mat-card-actions>
   </form>
