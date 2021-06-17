@@ -1,1 +1,33 @@
-<p>team works!</p>
+<div  [@fadeIn]  style="margin-top: 25px; text-align: center;">
+    <h1 style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-size: 45px;">
+        EQUIPOS
+    </h1>
+      <div *ngFor="let team of teams;  last as isLast; let i = index">
+        <button  style="margin-left: 25px;" mat-fab color="accent" *ngIf="isLast" (click)="getcount(i)"><span class="material-icons">add</span></button>
+      </div>
+    
+</div>
+<div [@largein] class="  row justify-content-center " >
+    <div *ngFor="let team of teams let i = index" class="  row justify-content-center ">
+        <mat-card class="gradient-border"  style="width: 80vh; margin-top: 40px; background-color: rgb(30, 39, 70);" *ngIf="team.name!='default'"> 
+            <div class="row">
+                <div class="col-lg-6" >
+                    <h2>{{i}}) {{team.name}}</h2>
+                </div>
+                <div class="col-lg-2" style="text-align: center;">
+                    <img src="{{team.image}}" alt="" style="width: 50px;" >
+                </div>
+                <div class="col-lg-4" style="text-align: end;">
+                    <button  mat-mini-fab style="background-color: #ccc42d; margin-right: 15px;" >
+                        <span class="material-icons"   >edit</span>
+                    </button>
+                      <button  mat-mini-fab color="warn">
+                        <span class="material-icons" >delete</span>
+                    </button>
+                </div>
+            </div>
+        </mat-card>
+    </div>
+       
+</div>
+

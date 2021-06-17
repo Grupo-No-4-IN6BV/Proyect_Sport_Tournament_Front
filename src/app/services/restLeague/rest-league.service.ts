@@ -11,6 +11,7 @@ export class RestLeagueService {
 
   public user;
   public token;
+  public league;
   public uri: string;
   public httpOptionsAuth = {
     headers: new HttpHeaders({
@@ -53,4 +54,13 @@ export class RestLeagueService {
      return this.http.put(this.uri+idUser+'/removeLeague/'+idLeague, null, {headers: headers})
      .pipe(map(this.extractData))
    }
+   getLeague(){
+    let league = JSON.parse(localStorage.getItem('league'));
+    if(league != null || league != undefined){
+      this.league = league;
+    }else{
+      this.league = null;
+    }
+    return this.league;     
+ }
 }

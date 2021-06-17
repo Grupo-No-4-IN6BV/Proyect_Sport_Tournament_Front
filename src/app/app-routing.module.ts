@@ -5,6 +5,7 @@ import { HomeComponent } from './components/home/home.component';
 import { LeagueComponent } from './components/league/league.component';
 import { ListUsersComponent } from './components/list-users/list-users.component';
 import { LoginComponent } from './components/login/login.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RegisterComponent } from './components/register/register.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { TeamComponent } from './components/team/team.component';
@@ -22,7 +23,8 @@ const routes: Routes = [
   {path: 'statistics', component: StatisticsComponent},
   {path: 'user', component: UserComponent},
   {path: 'users', component: UsersComponent},
-  {path: 'league/teams', component: TeamComponent}
+  {path: 'league/teams', component: TeamComponent},
+  {path: 'not-found', component: NotFoundComponent}
 ];
 
 @NgModule({

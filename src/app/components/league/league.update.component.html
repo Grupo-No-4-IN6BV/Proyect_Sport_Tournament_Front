@@ -1,9 +1,10 @@
+<h2>Editar Liga</h2>
 
-
-<p>{{data.name}}</p>
-
-    <mat-form-field  class="example-form-field" style="margin-left: 20px; width: 90%;">
-        <input matInput type="text" [(ngModel)]="data.name" name="name"  autocomplete="off">
-    </mat-form-field>
+<mat-form-field  class="example-form-field" style="margin-left: 20px; width: 90%;">
+    <input matInput type="text" [(ngModel)]="data.name" name="name"  autocomplete="off">
+</mat-form-field><br>
+<div class="button">
     <button mat-raised-button color="accent" (click)="updateLeague()">Confirmar</button>
+</div>
+
 

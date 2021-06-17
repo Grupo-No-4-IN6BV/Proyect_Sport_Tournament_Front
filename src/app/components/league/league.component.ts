@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { Router } from '@angular/router';
 import { fadeIn, largein } from 'src/app/animations/animations';
 import { League } from 'src/app/models/league';
+import { Team } from 'src/app/models/team';
 import { RestLeagueService } from 'src/app/services/restLeague/rest-league.service';
 import { RestUserService } from 'src/app/services/restUser/rest-user.service';
 
@@ -36,7 +37,7 @@ export class LeagueComponent implements OnInit {
   
 
   constructor(private restUser:RestUserService, private router:Router,  private restLeague:RestLeagueService, public dialog: MatDialog) {
-    this.parentMessage = "message from parent"
+
   }
 
   ngOnInit(): void {
@@ -44,6 +45,7 @@ export class LeagueComponent implements OnInit {
     this.user = this.restUser.getUser();
     this.leagues = this.user.leagues;
     console.log(this.leagues)
+
   }
 
   getLeague(league){
@@ -52,6 +54,7 @@ export class LeagueComponent implements OnInit {
     this.idleagueSelected = this.leagueSelected._id;
     this.imageleagueSelected = this.leagueSelected.image;
     console.log(league)
+    localStorage.setItem('league', JSON.stringify(league));
   }
 
   goTeam(league){
@@ -59,6 +62,8 @@ export class LeagueComponent implements OnInit {
     localStorage.setItem('league', JSON.stringify(league));
     this.router.navigateByUrl('league/teams');
   }
+
+
 
   prueba(){
     this.ngOnInit()
@@ -78,7 +83,7 @@ export class LeagueComponent implements OnInit {
 
   openDelete(): void {
     const dialogRef = this.dialog.open(LeagueRemoveComponent, {
-      height: '280px',
+      height: '200px',
       width: '400px',
       data: {name: this.nameleagueSelected, id: this.idleagueSelected}
     });
@@ -197,6 +202,7 @@ export class LeagueRemoveComponent implements OnInit {
 export class LeagueSaveComponent implements OnInit {
 
   public league: League;
+  public team: Team;
   public leagueLogg;
   public token;
   public user;
@@ -214,11 +220,11 @@ export class LeagueSaveComponent implements OnInit {
 
   onSubmit(saveLeague){
     this.restLeague.saveLeague(this.user._id, this.league).subscribe((res:any)=>{
-      if(res.pushLeague){
+      if(res.userFind2){
         alert(res.message)
         saveLeague.reset()
         delete res.pushLeague.password;
-        this.user = res.pushLeague;
+        this.user = res.userFind2;
         localStorage.setItem('user', JSON.stringify(this.user));
       }else{
         alert(res.message)

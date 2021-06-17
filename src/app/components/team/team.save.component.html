@@ -1,0 +1,23 @@
+
+<form #saveTeam="ngForm" (ngSubmit)="onSubmit(saveTeam)">
+    <h2>Agregar Liga</h2>
+    <mat-form-field  class="example-form-field" style="margin-left: 20px; width: 90%;">
+      
+        <input matInput type="text" [(ngModel)]="team.name" type="text" id="passwordRemoved" name="name" placeholder="Nombre del Equipo" autocomplete="off">
+      </mat-form-field>
+      <mat-form-field  class="example-form-field" style="margin-left: 20px; width: 90%;">
+        <input matInput type="text" [(ngModel)]="team.image" type="test" id="passwordRemoved" name="name" placeholder="URL de Imagen" autocomplete="off">
+        
+      </mat-form-field><br><br>
+      <p>Previsualización de Imagen:</p><br>
+      <div class="button">
+        <img src="{{team.image}}" alt="">
+      </div>
+      <div *ngFor="let team of teams;  last as isLast; let i = index" >
+        <mat-card class="example-card" id="cardP" style="margin-right: 20px;" *ngIf="isLast">
+          <p>{{i}}</p>
+          <button type="submit" mat-flat-button color="accent" (click)="getcount(i)" (click)="onNoClick()">Agregar team</button>
+          </mat-card>
+      </div>
+      <button type="submit" mat-flat-button color="accent" (click)="onNoClick()">Agregar team</button>
+</form>
