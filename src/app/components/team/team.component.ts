@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -28,6 +28,8 @@ export class TeamComponent implements OnInit {
   user;
   btnadd:boolean;
   count=0;
+  teamSelect;
+  jornada: number;
   
 
   ngOnInit(): void {
@@ -39,11 +41,15 @@ export class TeamComponent implements OnInit {
     this.count=0;
   }
 
+  getteamselect(teamSelect){
+    this.teamSelect= teamSelect;
+    console.log(this.teamSelect)
+  }
 
 
   getcount(i){
     console.log(i)
-    if(i>=5){
+    if(i>=10){
       console.log(i)
       this.snackBar.open('error ', 'cerrar', {
         duration: 2000,
@@ -51,11 +57,16 @@ export class TeamComponent implements OnInit {
         verticalPosition: 'bottom',
         panelClass: ['mat-toolbar', 'mat-warn']
       });
-    }else if(i<5){
+    }else if(i<10){
       this.openDialog()
     }else{
       this.btnadd = true;
     }
+  }
+
+  getJorn(i){
+    this.jornada = i;
+    this.openMarker()
   }
 
   openDialog(): void {
@@ -66,8 +77,84 @@ export class TeamComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.ngOnInit();
     });
+  }
+
+  openMarker(): void {
+    const dialogRef = this.dialog.open(TeamMarkerComponent, {
+      height: '500px',
+      width: '700px',
+      data: {jornada: this.jornada}
+    });
+      dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
+    });
 
 }
+}
+
+export interface teamData {
+  jornada: number;
+}
+
+
+@Component({
+  selector: 'app-team-marker',
+  templateUrl: './team.marker.component.html',
+  styleUrls: ['./team.component.css'],
+  animations: [fadeIn],
+  encapsulation: ViewEncapsulation.None
+})
+export class TeamMarkerComponent implements OnInit {
+  selected1;
+  goals1;
+  selected2;
+  goals2;
+  jornadaSelect;
+  jornadas;
+
+  teams:[]
+  public token;
+  league;
+  teamSelected;
+  user;
+  btnadd:boolean;
+  count=0;
+  teamSelect;
+
+
+  ngOnInit(): void {
+    this.teamSelected = new Team('','','',0);
+    this.league = this.restLeague.getLeague();
+    this.user = JSON.parse(localStorage.getItem('user'));
+    this.teams = this.league.teams;
+  }
+
+  counter() {
+    this.jornadas=this.data.jornada
+    this.jornadas=this.jornadas-1;
+    return new Array(this.jornadas);
+}
+
+  constructor(public dialogRef: MatDialogRef<TeamMarkerComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: teamData,private restLeague: RestLeagueService, private router:Router, private restTeam:RestTeamService){}
+
+    
+  getteamWin(){
+    if(this.selected2=='default' ||this.selected1=='default' ){
+      console.log('elige un equipo valido')
+    }else if(this.goals1 < this.goals2){
+      console.log('winner', this.selected2)
+    }else if(this.goals1 > this.goals2){
+      console.log('winner', this.selected1)
+    }else if(this.goals1 = this.goals2){
+      console.log('empate')
+    }else {
+      console.log('error')
+    }
+  }
+
+
+
 }
 
 
@@ -87,6 +174,10 @@ export class TeamSaveComponent implements OnInit {
   public team: Team;
   count:number;
   limit=3;
+
+  counter(i: number) {
+    return new Array(i);
+}
 
   constructor(public dialogRef: MatDialogRef<TeamSaveComponent>,
     @Inject(MAT_DIALOG_DATA) public data: null, private restLeague: RestLeagueService, private restUser: RestUserService, private router:Router, private restTeam:RestTeamService, public dialog: MatDialog) { }
