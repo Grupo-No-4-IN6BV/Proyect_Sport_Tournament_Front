@@ -243,7 +243,6 @@ export class TeamMarkerComponent implements OnInit {
     }
   }
 
-<<<<<<< HEAD
   setMatch(){
 
     this.restTeam.updateMatch(this.league._id, this.idTeam, this.match).subscribe((res:any)=>{
@@ -255,8 +254,6 @@ export class TeamMarkerComponent implements OnInit {
     },
     error=> alert(error.error.message))
   }
-=======
->>>>>>> f8a46cb2c4a0f3ec1613cc75c02b7ef3686d937b
 }
 
 

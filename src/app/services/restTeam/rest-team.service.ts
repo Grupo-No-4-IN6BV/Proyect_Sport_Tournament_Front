@@ -48,7 +48,6 @@ export class RestTeamService {
     .pipe(map(this.extractData))
   }
 
-<<<<<<< HEAD
   updateMatch(idLeague,idTeam, match){
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -60,7 +59,15 @@ export class RestTeamService {
   }
 
   getMatches(idLeague, match){
-=======
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.getToken()
+    });
+    let params = JSON.stringify(match);
+    return this.http.put(this.uri+'getMatches/'+idLeague, params, {headers: headers})
+    .pipe(map(this.extractData))
+  }
+
   removeTeam(idLeague, idTeam){
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -71,48 +78,28 @@ export class RestTeamService {
   }
 
   updateTeam(idLeague, team){
->>>>>>> f8a46cb2c4a0f3ec1613cc75c02b7ef3686d937b
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': this.getToken()
     });
-<<<<<<< HEAD
-    let params = JSON.stringify(match);
-    return this.http.put(this.uri+'getMatches/'+idLeague, params, {headers: headers})
-    .pipe(map(this.extractData))
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
     let params = JSON.stringify(team);
     return this.http.put(this.uri+idLeague+'/updateTeam/'+team.id, params, {headers: headers})
     .pipe(map(this.extractData))
   }
-
-  getTeam(){
-    let team = JSON.parse(localStorage.getItem('team'));
-    if(team != null || team != undefined){
-      this.team = team;
-    }else{
-      this.team = null;
-    }
-    return this.team;     
- }
- 
 }
->>>>>>> f8a46cb2c4a0f3ec1613cc75c02b7ef3686d937b
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
