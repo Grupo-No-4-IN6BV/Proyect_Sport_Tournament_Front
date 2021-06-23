@@ -5,12 +5,14 @@ import { RestTeamService } from 'src/app/services/restTeam/rest-team.service';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { fadeIn } from 'src/app/animations/animations';
 
 
 @Component({
   selector: 'app-statistics',
   templateUrl: './statistics.component.html',
-  styleUrls: ['./statistics.component.css']
+  styleUrls: ['./statistics.component.css'],
+  animations: [fadeIn]
 })
 export class StatisticsComponent implements OnInit {
 
@@ -26,14 +28,13 @@ export class StatisticsComponent implements OnInit {
 
 
   constructor(private restLeague: RestLeagueService,private restTeam:RestTeamService) { 
-   
   }
 
   ngOnInit(): void {
     this.league = this.restLeague.getLeague();
     this.user = JSON.parse(localStorage.getItem('user'));
     this.match = new Match('',0,0,0,0,0,0,'')
-    this.jornadaSelect = 1;
+    this.jornadaSelect = 0;
     this.listMatch()
     
   }
@@ -62,7 +63,7 @@ export class StatisticsComponent implements OnInit {
   showLegend: boolean = true;
   showLabels: boolean = true;
   isDoughnut: boolean = false;
-  legendPosition: string = 'below';
+  legendPosition: string = 'right';
 
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
