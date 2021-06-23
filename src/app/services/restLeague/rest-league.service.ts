@@ -54,6 +54,7 @@ export class RestLeagueService {
      return this.http.put(this.uri+idUser+'/removeLeague/'+idLeague, null, {headers: headers})
      .pipe(map(this.extractData))
    }
+   
    getLeague(){
     let league = JSON.parse(localStorage.getItem('league'));
     if(league != null || league != undefined){
@@ -62,5 +63,5 @@ export class RestLeagueService {
       this.league = null;
     }
     return this.league;     
- }
+  }
 }

@@ -19,7 +19,7 @@ import { DialogOverviewExampleDialog, UserComponent, UserdeleteComponent } from 
 import { MaterialModule } from './styles/material.module';
 import { UsersComponent } from './components/users/users.component';
 import { ListUsersComponent } from './components/list-users/list-users.component';
-import { TeamComponent, TeamMarkerComponent, TeamSaveComponent } from './components/team/team.component';
+import { TeamComponent, TeamMarkerComponent, TeamSaveComponent, TeamUpdateComponent, TeamRemoveComponent } from './components/team/team.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
 import { NgSelectModule } from '@ng-select/ng-select';
@@ -52,6 +52,8 @@ import { ChartsModule } from 'ng2-charts';
     ListUsersComponent,
     TeamComponent,
     TeamSaveComponent,
+    TeamRemoveComponent, 
+    TeamUpdateComponent,
     NotFoundComponent,
     TeamMarkerComponent,
 

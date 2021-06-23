@@ -18,10 +18,10 @@
                     <img src="{{team.image}}" alt="" style="width: 50px;" >
                 </div>
                 <div class="col-lg-4" style="text-align: end;">
-                    <button  mat-mini-fab style="background-color: #ccc42d; margin-right: 15px;" >
-                        <span class="material-icons"   >edit</span>
+                    <button  mat-mini-fab style="background-color: #ccc42d; margin-right: 15px;" (click)="getTeam(team)" (click)="openUpdate()">
+                        <span class="material-icons">edit</span>
                     </button>
-                      <button  mat-mini-fab color="warn">
+                      <button  mat-mini-fab color="warn" (click)="getTeam(team)" (click)="openDelete()">
                         <span class="material-icons" >delete</span>   
                     </button>  
                 </div>

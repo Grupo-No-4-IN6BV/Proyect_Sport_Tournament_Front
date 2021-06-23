@@ -9,6 +9,12 @@ import { RestLeagueService } from 'src/app/services/restLeague/rest-league.servi
 import { RestTeamService } from 'src/app/services/restTeam/rest-team.service';
 import { RestUserService } from 'src/app/services/restUser/rest-user.service';
 
+export interface DialogData {
+  name: string;
+  id: string;
+  image: string;
+}
+
 @Component({
   selector: 'app-team',
   templateUrl: './team.component.html',
@@ -31,6 +37,9 @@ export class TeamComponent implements OnInit {
   count=0;
   teamSelect;
   jornada: number;
+  nameteamSelected: String;
+  idteamSelected: String;
+  imageteamSelected: String;
   
 
   ngOnInit(): void {
@@ -40,6 +49,15 @@ export class TeamComponent implements OnInit {
     this.teams = this.league.teams;
     console.log(this.teams)
     this.count=0;
+  }
+
+  getTeam(team){
+    this.teamSelected = team;
+    this.nameteamSelected = this.teamSelected.name;
+    this.idteamSelected = this.teamSelected._id;
+    this.imageteamSelected = this.teamSelected.image;
+    console.log(team)
+    localStorage.setItem('team', JSON.stringify(team));
   }
 
   getteamselect(teamSelect){
@@ -80,6 +98,19 @@ export class TeamComponent implements OnInit {
     });
   }
 
+  openDelete(): void {
+    console.log('llega aqui');
+    const dialogRef = this.dialog.open(TeamRemoveComponent, {
+      height: '200px',
+      width: '400px',
+      data: {name: this.nameteamSelected, id: this.idteamSelected}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
+    });
+  }
+
   openMarker(): void {
     const dialogRef = this.dialog.open(TeamMarkerComponent, {
       height: '500px',
@@ -89,8 +120,18 @@ export class TeamComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
       this.ngOnInit();
     });
+  }
 
-}
+  openUpdate(): void {
+    const dialogRef = this.dialog.open(TeamUpdateComponent, {
+      height: '450px',
+      width: '800px',
+      data: {name: this.nameteamSelected, id: this.idteamSelected}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
+    });
+  }
 }
 
 export interface teamData {
@@ -202,6 +243,7 @@ export class TeamMarkerComponent implements OnInit {
     }
   }
 
+<<<<<<< HEAD
   setMatch(){
 
     this.restTeam.updateMatch(this.league._id, this.idTeam, this.match).subscribe((res:any)=>{
@@ -213,6 +255,8 @@ export class TeamMarkerComponent implements OnInit {
     },
     error=> alert(error.error.message))
   }
+=======
+>>>>>>> f8a46cb2c4a0f3ec1613cc75c02b7ef3686d937b
 }
 
 
@@ -275,3 +319,85 @@ export class TeamSaveComponent implements OnInit {
   
 }
 
+@Component({
+  selector: 'app-teamremove',
+  template:`Message from parent:`,
+  templateUrl: './team.remove.component.html',
+  styleUrls: ['./team.component.css'],
+  animations: [fadeIn]
+})
+export class TeamRemoveComponent implements OnInit {
+
+  league;
+  teams:[];
+  user;
+
+  constructor(public dialogRef: MatDialogRef<TeamRemoveComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,  private restLeague:RestLeagueService,private restUser: RestUserService, private restTeam:RestTeamService){}
+
+
+  ngOnInit(): void {
+    this.league = this.restLeague.getLeague();
+  }
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+  removeTeam(){
+    console.log(this.league._id);
+    this.restTeam.removeTeam(this.league._id, this.data.id).subscribe((res:any)=>{
+      if(res.teamPull){
+        alert(res.message);
+        localStorage.setItem('league', JSON.stringify(res.teamPull))
+        this.league = this.restLeague.getLeague()
+        this.teams = this.league.teams;
+      }else{
+        alert(res.message);
+      }
+    },
+    error => alert(error.error.message))
+  }
+}
+
+
+@Component({
+  selector: 'app-teamupdate',
+  templateUrl: './team.update.component.html',
+  styleUrls: ['./team.component.css'],
+  animations: [fadeIn]
+})
+export class TeamUpdateComponent implements OnInit {
+
+  league;
+  teams:[];
+
+
+  constructor(public dialogRef: MatDialogRef<TeamUpdateComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private restTeam:RestTeamService,  private restLeague:RestLeagueService){}
+    
+  ngOnInit(): void {
+    this.league = this.restLeague.getLeague();
+    this.teams = this.league.teams;
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  updateTeam(){
+    console.log(this.data);
+    this.restTeam.updateTeam(this.league._id, this.data).subscribe((res:any)=>{
+      if(res.leagueFind){
+        alert(res.message)
+        this.league = res.leagueFind;
+        localStorage.setItem('league', JSON.stringify(this.league))
+        this.ngOnInit();
+      }else{
+        alert(res.message);
+        this.league = this.restLeague.getLeague();
+        this.teams = this.league.teams;
+      }
+    },
+    error => alert(error.error.message))
+  }
+  
+}
