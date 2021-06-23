@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { fadeIn, largein } from 'src/app/animations/animations';
+import { Match } from 'src/app/models/match';
 import { Team } from 'src/app/models/team';
 import { RestLeagueService } from 'src/app/services/restLeague/rest-league.service';
 import { RestTeamService } from 'src/app/services/restTeam/rest-team.service';
@@ -112,18 +113,27 @@ export class TeamMarkerComponent implements OnInit {
   jornadaSelect;
   jornadas;
 
+  winner;
+  idTeam;
+
   teams:[]
   public token;
+  public match: Match;
   league;
   teamSelected;
   user;
   btnadd:boolean;
   count=0;
   teamSelect;
+  i;
+
+
+
 
 
   ngOnInit(): void {
     this.teamSelected = new Team('','','',0);
+    this.match = new Match('',0,0,0,0,0,0,'')
     this.league = this.restLeague.getLeague();
     this.user = JSON.parse(localStorage.getItem('user'));
     this.teams = this.league.teams;
@@ -136,25 +146,73 @@ export class TeamMarkerComponent implements OnInit {
 }
 
   constructor(public dialogRef: MatDialogRef<TeamMarkerComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: teamData,private restLeague: RestLeagueService, private router:Router, private restTeam:RestTeamService){}
+    @Inject(MAT_DIALOG_DATA) public data: teamData,private restLeague: RestLeagueService, private router:Router, private restTeam:RestTeamService, public snackBar: MatSnackBar){}
 
     
   getteamWin(){
     if(this.selected2=='default' ||this.selected1=='default' ){
       console.log('elige un equipo valido')
-    }else if(this.goals1 < this.goals2){
-      console.log('winner', this.selected2)
+    }else if(this.selected1==this.selected2){
+      this.snackBar.open('eliga dos equipos diferentes', 'cerrar', {
+        duration: 2000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        panelClass: ['mat-toolbar', 'mat-warn']
+      });
+
+    }else if(this.jornadaSelect==undefined){
+      this.snackBar.open('eliga una jornada', 'cerrar', {
+        duration: 2000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        panelClass: ['mat-toolbar', 'mat-warn']
+      });
+
+
+    }else if(this.goals1==undefined || this.goals2==undefined){
+      this.snackBar.open('eliga goles a favor de los 2 equipos', 'cerrar', {
+        duration: 2000,
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        panelClass: ['mat-toolbar', 'mat-warn']
+      });
+
+    }
+    else if(this.goals1 < this.goals2 || this.goals1 == this.goals2){
+      this.idTeam = this.selected2
+      this.match.idLoser = this.selected1;
+      this.match.idMatch = this.jornadaSelect;
+      this.match.goals=this.goals2;
+      this.match.goalsf=this.goals1;
+      this.match.matchCount=1;
+      this.setMatch()
+      
     }else if(this.goals1 > this.goals2){
-      console.log('winner', this.selected1)
-    }else if(this.goals1 = this.goals2){
-      console.log('empate')
-    }else {
+
+      this.idTeam = this.selected1
+      this.match.idLoser = this.selected2;
+      this.match.idMatch = this.jornadaSelect;
+      this.match.goals = this.goals1;
+      this.match.goalsf = this.goals2;
+      this.match.matchCount = 1;
+      this.setMatch();
+
+    }else{
       console.log('error')
     }
   }
 
+  setMatch(){
 
-
+    this.restTeam.updateMatch(this.league._id, this.idTeam, this.match).subscribe((res:any)=>{
+      if(res.pushMatch){
+        console.log('si se pudo we')
+      }else{
+        alert(res.message)
+      }
+    },
+    error=> alert(error.error.message))
+  }
 }
 
 

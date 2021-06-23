@@ -23,6 +23,10 @@ import { TeamComponent, TeamMarkerComponent, TeamSaveComponent } from './compone
 import { NotFoundComponent } from './components/not-found/not-found.component';
 
 import { NgSelectModule } from '@ng-select/ng-select';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { ChartsModule } from 'ng2-charts';
+
 
 
 
@@ -49,12 +53,12 @@ import { NgSelectModule } from '@ng-select/ng-select';
     TeamComponent,
     TeamSaveComponent,
     NotFoundComponent,
-    TeamMarkerComponent
+    TeamMarkerComponent,
 
   ],
   entryComponents: [
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,9 +69,14 @@ import { NgSelectModule } from '@ng-select/ng-select';
     FormsModule,
     HttpClientModule,
     MaterialModule,
-    NgSelectModule
+    NgSelectModule,
+    NgxChartsModule,
+    ChartsModule
+
   ],
-  providers: [],
+  providers: [
+  ],
+  
   bootstrap: [AppComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

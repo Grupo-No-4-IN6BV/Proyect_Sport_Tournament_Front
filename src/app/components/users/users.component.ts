@@ -28,7 +28,7 @@ export class UsersComponent implements OnInit {
     this.restUser.getUsers().subscribe((res:any)=>{
       if(res.users){
         this.users = res.users;
-        console.log('usuarios cargados')
+        console.log(res.users)
       }else{
         alert(res.message)
       }

@@ -1,1 +1,28 @@
-<p>statistics works!</p>
+
+<div *ngFor="let team of teams | slice:1; let i = index">
+    <p>{{i}}</p>
+    <p>{{team.name}}</p>
+    <p>{{team.leagueMatch}}</p>
+</div>
+
+<mat-card class="gradient-border"  *ngFor="let match of matches" style="width: 110vh; margin-top: 40px; background-color: rgb(30, 39, 70);">
+    <h2>{{match.goals}}</h2>
+</mat-card> 
+<!--select jornada --> 
+<mat-form-field appearance="fill">
+    <mat-label>Select an option</mat-label>
+    <mat-select [(value)]="jornadaSelect" >
+      <mat-option *ngFor='let in of counter(5)  let i = index;' [value]="i"  (click)="listMatch()">Jornada {{i+1}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+<ngx-charts-pie-chart
+  [view]="view"
+  [scheme]="colorScheme"
+  [results]="matches"
+  [legend]="showLegend"
+  [labels]="showLabels"
+  [doughnut]="isDoughnut"
+  >
+</ngx-charts-pie-chart>
+    
