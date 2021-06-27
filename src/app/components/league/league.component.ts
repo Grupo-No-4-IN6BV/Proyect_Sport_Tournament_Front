@@ -45,7 +45,6 @@ export class LeagueComponent implements OnInit {
     this.user = this.restUser.getUser();
     this.leagues = this.user.leagues;
     console.log(this.leagues)
-
   }
 
   getLeague(league){
@@ -53,17 +52,12 @@ export class LeagueComponent implements OnInit {
     this.nameleagueSelected = this.leagueSelected.name;
     this.idleagueSelected = this.leagueSelected._id;
     this.imageleagueSelected = this.leagueSelected.image;
-    console.log(league)
-    localStorage.setItem('league', JSON.stringify(league));
+   
   }
 
   goTeam(league){
-    this.leagueSelected = league;
-    localStorage.setItem('league', JSON.stringify(league));
-    this.router.navigateByUrl('league/teams');
+    this.router.navigate([league._id,'teams']);
   }
-
-
 
   prueba(){
     this.ngOnInit()
@@ -103,7 +97,6 @@ export class LeagueComponent implements OnInit {
       this.ngOnInit();
     });
   }
-
 }
 
 

@@ -55,13 +55,5 @@ export class RestLeagueService {
      .pipe(map(this.extractData))
    }
    
-   getLeague(){
-    let league = JSON.parse(localStorage.getItem('league'));
-    if(league != null || league != undefined){
-      this.league = league;
-    }else{
-      this.league = null;
-    }
-    return this.league;     
-  }
+
 }

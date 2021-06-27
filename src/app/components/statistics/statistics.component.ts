@@ -31,7 +31,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.league = this.restLeague.getLeague();
+
     this.user = JSON.parse(localStorage.getItem('user'));
     this.match = new Match('',0,0,0,0,0,0,'')
     this.jornadaSelect = 0;

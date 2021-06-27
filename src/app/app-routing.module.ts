@@ -23,7 +23,7 @@ const routes: Routes = [
   {path: 'statistics', component: StatisticsComponent},
   {path: 'user', component: UserComponent},
   {path: 'users', component: UsersComponent},
-  {path: 'league/teams', component: TeamComponent},
+  {path: ':id/teams', component: TeamComponent},
   {path: 'not-found', component: NotFoundComponent}
 ];
 
