@@ -20,7 +20,7 @@ const routes: Routes = [
   {path: 'list-users', component: ListUsersComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent },
-  {path: 'statistics', component: StatisticsComponent},
+  {path: ':id/statistics', component: StatisticsComponent},
   {path: 'user', component: UserComponent},
   {path: 'users', component: UsersComponent},
   {path: ':id/teams', component: TeamComponent},

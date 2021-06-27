@@ -21,7 +21,7 @@ import { RestUserService } from 'src/app/services/restUser/rest-user.service';
 })
 export class TeamComponent implements OnInit {
 
-  constructor(private restLeague: RestLeagueService, private router:Router, private restTeam:RestTeamService, public dialog: MatDialog, public snackBar: MatSnackBar, private route:ActivatedRoute) { }
+  constructor(private restUser: RestUserService ,private restLeague: RestLeagueService, private router:Router, private restTeam:RestTeamService, public dialog: MatDialog, public snackBar: MatSnackBar, private route:ActivatedRoute) { }
 
   teams:[]
   public token;
@@ -37,13 +37,15 @@ export class TeamComponent implements OnInit {
   imageteamSelected: String;
 
   idLeague;
+  leagues:[];
 
   
 
   ngOnInit(): void {
     this.teamSelected = new Team('','','',0);
     this.idLeague = this.route.snapshot.paramMap.get("id")
-    console.log(this.idLeague)
+    this.user = this.restUser.getUser();
+    this.leagues = this.user.leagues;
     this.restTeam.getLeagues(this.idLeague).subscribe((res:any)=>{
       if(res.leagueFind){
         this.league = res.leagueFind;
@@ -71,6 +73,9 @@ export class TeamComponent implements OnInit {
 
   getteamselect(teamSelect){
     this.teamSelect= teamSelect;
+  }
+  goStastics(){
+    this.router.navigate([this.league._id,'statistics']);
   }
 
 

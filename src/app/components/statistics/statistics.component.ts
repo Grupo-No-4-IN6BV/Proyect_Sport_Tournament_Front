@@ -6,6 +6,7 @@ import { RestTeamService } from 'src/app/services/restTeam/rest-team.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { fadeIn } from 'src/app/animations/animations';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -25,26 +26,30 @@ export class StatisticsComponent implements OnInit {
   user;
   jornadaSelect;
   public match: Match;
+  idLeague;
+  countTeams;
 
 
-  constructor(private restLeague: RestLeagueService,private restTeam:RestTeamService) { 
+  constructor(private restLeague: RestLeagueService,private restTeam:RestTeamService, private route: ActivatedRoute) { 
   }
 
   ngOnInit(): void {
-
+    this.idLeague = this.route.snapshot.paramMap.get("id")
     this.user = JSON.parse(localStorage.getItem('user'));
     this.match = new Match('',0,0,0,0,0,0,'')
     this.jornadaSelect = 0;
     this.listMatch()
-    
   }
+
+
 
 
   listMatch(){
     this.match.idMatch = this.jornadaSelect;
-    this.restTeam.getMatches(this.league._id, this.match).subscribe((res:any)=>{
+    this.restTeam.getMatches(this.idLeague, this.match).subscribe((res:any)=>{
       if(res.matches){
         this.matches = res.matches;
+        this.countTeams = res.countTeams-1
         console.log(this.matches)
         
       }else{
@@ -53,6 +58,7 @@ export class StatisticsComponent implements OnInit {
     },
     error => alert(error.error.message))
   }
+  
 
   matches: any[]
   single: any[];
@@ -70,8 +76,8 @@ export class StatisticsComponent implements OnInit {
   };
 
 
-  counter(num: number) {
-    return new Array(num);
+  counter() {
+    return new Array(this.countTeams);
 }
 
 

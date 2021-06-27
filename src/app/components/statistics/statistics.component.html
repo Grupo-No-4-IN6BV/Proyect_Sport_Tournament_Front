@@ -7,7 +7,7 @@
  <mat-form-field appearance="fill" style="margin-left: 15px; margin-left: 7vh; margin-right: -10vh;">
   <mat-label>Select an option</mat-label>
   <mat-select [(value)]="jornadaSelect" >
-    <mat-option *ngFor='let in of counter(5)  let i = index;' [value]="i"  (click)="listMatch()">Jornada {{i+1}}</mat-option>
+    <mat-option *ngFor='let in of counter()  let i = index;' [value]="i"  (click)="listMatch()">Jornada {{i+1}}</mat-option>
   </mat-select>
 </mat-form-field>
 <div class="row">
