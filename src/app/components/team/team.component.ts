@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { fadeIn, largein } from 'src/app/animations/animations';
 import { Match } from 'src/app/models/match';
 import { Team } from 'src/app/models/team';
@@ -9,11 +9,6 @@ import { RestLeagueService } from 'src/app/services/restLeague/rest-league.servi
 import { RestTeamService } from 'src/app/services/restTeam/rest-team.service';
 import { RestUserService } from 'src/app/services/restUser/rest-user.service';
 
-export interface DialogData {
-  name: string;
-  id: string;
-  image: string;
-}
 
 @Component({
   selector: 'app-team',
@@ -26,7 +21,7 @@ export interface DialogData {
 })
 export class TeamComponent implements OnInit {
 
-  constructor(private restLeague: RestLeagueService, private router:Router, private restTeam:RestTeamService, public dialog: MatDialog, public snackBar: MatSnackBar) { }
+  constructor(private restLeague: RestLeagueService, private router:Router, private restTeam:RestTeamService, public dialog: MatDialog, public snackBar: MatSnackBar, private route:ActivatedRoute) { }
 
   teams:[]
   public token;
@@ -40,15 +35,30 @@ export class TeamComponent implements OnInit {
   nameteamSelected: String;
   idteamSelected: String;
   imageteamSelected: String;
+
+  idLeague;
+
   
 
   ngOnInit(): void {
     this.teamSelected = new Team('','','',0);
-    this.league = this.restLeague.getLeague();
-    this.user = JSON.parse(localStorage.getItem('user'));
-    this.teams = this.league.teams;
-    console.log(this.teams)
-    this.count=0;
+    this.idLeague = this.route.snapshot.paramMap.get("id")
+    console.log(this.idLeague)
+    this.restTeam.getLeagues(this.idLeague).subscribe((res:any)=>{
+      if(res.leagueFind){
+        this.league = res.leagueFind;
+        this.teams = this.league.teams
+      }else{
+        this.snackBar.open('error de carga', 'cerrar', {
+          duration: 2000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          panelClass: ['mat-toolbar', 'mat-warn']
+        });
+      }
+    });
+
+    
   }
 
   getTeam(team){
@@ -57,13 +67,13 @@ export class TeamComponent implements OnInit {
     this.idteamSelected = this.teamSelected._id;
     this.imageteamSelected = this.teamSelected.image;
     console.log(team)
-    localStorage.setItem('team', JSON.stringify(team));
   }
 
   getteamselect(teamSelect){
     this.teamSelect= teamSelect;
-    console.log(this.teamSelect)
   }
+
+
 
 
   getcount(i){
@@ -92,6 +102,7 @@ export class TeamComponent implements OnInit {
     const dialogRef = this.dialog.open(TeamSaveComponent, {
       height: '330px',
       width: '400px',
+      data: {idLeague:this.idLeague}
     });
     dialogRef.afterClosed().subscribe(result => {
       this.ngOnInit();
@@ -103,7 +114,7 @@ export class TeamComponent implements OnInit {
     const dialogRef = this.dialog.open(TeamRemoveComponent, {
       height: '200px',
       width: '400px',
-      data: {name: this.nameteamSelected, id: this.idteamSelected}
+      data: {name: this.nameteamSelected, id: this.idteamSelected, idLeague: this.idLeague}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -115,7 +126,7 @@ export class TeamComponent implements OnInit {
     const dialogRef = this.dialog.open(TeamMarkerComponent, {
       height: '500px',
       width: '700px',
-      data: {jornada: this.jornada}
+      data: {jornada: this.jornada,idLeague:this.idLeague}
     });
       dialogRef.afterClosed().subscribe(result => {
       this.ngOnInit();
@@ -126,7 +137,7 @@ export class TeamComponent implements OnInit {
     const dialogRef = this.dialog.open(TeamUpdateComponent, {
       height: '450px',
       width: '800px',
-      data: {name: this.nameteamSelected, id: this.idteamSelected}
+      data: {name: this.nameteamSelected, id: this.idteamSelected, idLeague:this.idLeague}
     });
     dialogRef.afterClosed().subscribe(result => {
       this.ngOnInit();
@@ -135,7 +146,11 @@ export class TeamComponent implements OnInit {
 }
 
 export interface teamData {
+  idLeague: any;
   jornada: number;
+  name: string;
+  id: string;
+  image: string;
 }
 
 
@@ -168,18 +183,6 @@ export class TeamMarkerComponent implements OnInit {
   teamSelect;
   i;
 
-
-
-
-
-  ngOnInit(): void {
-    this.teamSelected = new Team('','','',0);
-    this.match = new Match('',0,0,0,0,0,0,'')
-    this.league = this.restLeague.getLeague();
-    this.user = JSON.parse(localStorage.getItem('user'));
-    this.teams = this.league.teams;
-  }
-
   counter() {
     this.jornadas=this.data.jornada
     this.jornadas=this.jornadas-1;
@@ -187,8 +190,25 @@ export class TeamMarkerComponent implements OnInit {
 }
 
   constructor(public dialogRef: MatDialogRef<TeamMarkerComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: teamData,private restLeague: RestLeagueService, private router:Router, private restTeam:RestTeamService, public snackBar: MatSnackBar){}
+    @Inject(MAT_DIALOG_DATA) public data: teamData,private restLeague: RestLeagueService, private router:Router, private restTeam:RestTeamService, public snackBar: MatSnackBar, private route: ActivatedRoute){}
 
+    ngOnInit(): void {
+      this.teamSelected = new Team('','','',0);
+      this.match = new Match('',0,0,0,0,0,0,'')
+      this.restTeam.getLeagues(this.data.idLeague).subscribe((res:any)=>{
+        if(res.leagueFind){
+          this.league = res.leagueFind;
+          this.teams = this.league.teams
+        }else{
+          this.snackBar.open('error de carga', 'cerrar', {
+            duration: 2000,
+            horizontalPosition: 'center',
+            verticalPosition: 'bottom',
+            panelClass: ['mat-toolbar', 'mat-warn']
+          });
+        }
+      });
+    }
     
   getteamWin(){
     if(this.selected2=='default' ||this.selected1=='default' ){
@@ -272,20 +292,18 @@ export class TeamSaveComponent implements OnInit {
   user;
   public team: Team;
   count:number;
-  limit=3;
+
+  idLeague;
 
   counter(i: number) {
     return new Array(i);
-}
+  }
 
   constructor(public dialogRef: MatDialogRef<TeamSaveComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: null, private restLeague: RestLeagueService, private restUser: RestUserService, private router:Router, private restTeam:RestTeamService, public dialog: MatDialog) { }
+    @Inject(MAT_DIALOG_DATA) public data: teamData, private restLeague: RestLeagueService, private restUser: RestUserService, private router:Router, private restTeam:RestTeamService, public dialog: MatDialog, private route:ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.team = new Team('','','',0);
-    this.league = this.restLeague.getLeague();
-    this.user = this.restUser.getUser();
-    this.teams = this.league.teams;
+    this.team = new Team('','','',0)
   }
 
   getcount(i){
@@ -297,15 +315,15 @@ export class TeamSaveComponent implements OnInit {
   }
 
   onSubmit(saveTeam){
+    this.user = this.restUser.getUser();
     this.count =this.count+1
     this.team.count = this.count
-    this.restTeam.saveTeam(this.user._id,this.league._id, this.team).subscribe((res:any)=>{
+    this.restTeam.saveTeam(this.user._id,this.data.idLeague, this.team).subscribe((res:any)=>{
       if(res.pushTeam){
         alert(res.message)
         saveTeam.reset()
         this.league = res.pushTeam;
         this.user = res.userFind;
-        localStorage.setItem('league', JSON.stringify(this.league))
         localStorage.setItem('user', JSON.stringify(this.user))
       }else{
         alert(res.message)
@@ -330,22 +348,21 @@ export class TeamRemoveComponent implements OnInit {
   user;
 
   constructor(public dialogRef: MatDialogRef<TeamRemoveComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,  private restLeague:RestLeagueService,private restUser: RestUserService, private restTeam:RestTeamService){}
+    @Inject(MAT_DIALOG_DATA) public data: teamData,  private restLeague:RestLeagueService,private restUser: RestUserService, private restTeam:RestTeamService){}
 
 
   ngOnInit(): void {
-    this.league = this.restLeague.getLeague();
+
   }
   onNoClick(): void {
     this.dialogRef.close();
   }
   removeTeam(){
-    console.log(this.league._id);
-    this.restTeam.removeTeam(this.league._id, this.data.id).subscribe((res:any)=>{
-      if(res.teamPull){
+    console.log(this.data.idLeague);
+    this.restTeam.removeTeam(this.data.idLeague, this.data.id).subscribe((res:any)=>{
+      if(res.matchdelete){
         alert(res.message);
-        localStorage.setItem('league', JSON.stringify(res.teamPull))
-        this.league = this.restLeague.getLeague()
+
         this.teams = this.league.teams;
       }else{
         alert(res.message);
@@ -366,14 +383,14 @@ export class TeamUpdateComponent implements OnInit {
 
   league;
   teams:[];
+  user;
 
 
   constructor(public dialogRef: MatDialogRef<TeamUpdateComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, private restTeam:RestTeamService,  private restLeague:RestLeagueService){}
+    @Inject(MAT_DIALOG_DATA) public data: teamData, private restTeam:RestTeamService,  private restLeague:RestLeagueService, private restUser:RestUserService, public snackBar: MatSnackBar){}
     
   ngOnInit(): void {
-    this.league = this.restLeague.getLeague();
-    this.teams = this.league.teams;
+ 
   }
 
   onNoClick(): void {
@@ -381,17 +398,18 @@ export class TeamUpdateComponent implements OnInit {
   }
 
   updateTeam(){
-    console.log(this.data);
-    this.restTeam.updateTeam(this.league._id, this.data).subscribe((res:any)=>{
-      if(res.leagueFind){
-        alert(res.message)
-        this.league = res.leagueFind;
-        localStorage.setItem('league', JSON.stringify(this.league))
-        this.ngOnInit();
+    this.user = this.restUser.getUser();
+    this.restTeam.updateTeam(this.user._id,this.data.idLeague, this.data).subscribe((res:any)=>{
+      if(res.updateTeam){
+        this.snackBar.open('Actualizado', 'cerrar', {
+          duration: 2000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['mat-toolbar', 'mat-primary']
+        });
+        this.dialogRef.close();
       }else{
         alert(res.message);
-        this.league = this.restLeague.getLeague();
-        this.teams = this.league.teams;
       }
     },
     error => alert(error.error.message))
