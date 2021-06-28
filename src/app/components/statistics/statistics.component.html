@@ -11,36 +11,30 @@
   </mat-select>
 </mat-form-field>
 <div class="row">
-<div class="col-lg-6" >
+<div class="col-lg-5" >
   <mat-card class="gradient-border"  style=" margin-top: 5px; background-color: rgb(30, 39, 70); height: 45px; margin-left: 5vh; ">
     <div class="row" style="text-align: center;">
-      <div class="col-lg-3" style="text-align: left;"><p>Equipo</p></div>
-      <div class="col-lg-2"><p>A favor</p></div>
-      <div class="col-lg-2"><p>En contra</p></div>
-      <div class="col-lg-2"><p>Diferencia</p></div>
-      <div class="col-lg-2"><p>Partidos</p></div>
-      <div class="col-lg-1"><p>Puntos</p>
+      <div class="col-lg-6" style="text-align: left;"><p>Equipo</p></div>
+      <div class="col-lg-3"><p>Goles</p></div>
+      <div class="col-lg-3"><p>Puntos</p>
       </div>
     </div>
   </mat-card>
-  <mat-card class="gradient-border"  *ngFor="let match of matches" style=" margin-top: 5px; background-color: #214358; height: 45px;  margin-left: 5vh; ">
+  <mat-card class="gradient-border"  *ngFor="let match of matches | orderbyP: 'value'" style=" margin-top: 5px; background-color: #214358; height: 45px;  margin-left: 5vh; ">
     <div class="row" style="text-align: center;">
-      <div class="col-lg-3" style="text-align: left;"><p>{{match.name}}</p></div>
-      <div class="col-lg-2"><p>{{match.goals}}</p></div>
-      <div class="col-lg-2"><p>{{match.goalsf}}</p></div>
-      <div class="col-lg-2">{{match.goals-match.goalsf}}</div>
-      <div class="col-lg-2"><p>{{match.matchCount}}</p></div>
-      <div class="col-lg-1"><p>{{match.value}}</p></div>
+      <div class="col-lg-6" style="text-align: left;"><p>{{match.name}}</p></div>
+      <div class="col-lg-3"><p>{{match.goals}}</p></div>
+      <div class="col-lg-3"><p>{{match.value}}</p></div>
     </div>
   </mat-card> 
 </div>
-<div class="col-lg-6" style="margin-right: -25vh;">
+<div class="col-lg-7" style="margin-right: -25vh;">
   <ngx-charts-pie-chart 
   [scheme]="colorScheme"
   [results]="matches"
   [legend]="showLegend"
   [legendPosition]="legendPosition"
-  [doughnut]="isDoughnut" >
+  [doughnut]="isDoughnut">
 </ngx-charts-pie-chart>
 </div>
 </div>

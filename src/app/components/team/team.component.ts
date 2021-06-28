@@ -77,7 +77,9 @@ export class TeamComponent implements OnInit {
   goStastics(){
     this.router.navigate([this.league._id,'statistics']);
   }
-
+  goTable(){
+    this.router.navigate([this.league._id,'table']);
+  }
 
 
 

@@ -26,6 +26,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ChartsModule } from 'ng2-charts';
+import { TableComponent } from './components/table/table.component';
+import { OrderbyPPipe } from './pipe/orderbyP/orderby-p.pipe';
 
 
 
@@ -56,6 +58,8 @@ import { ChartsModule } from 'ng2-charts';
     TeamUpdateComponent,
     NotFoundComponent,
     TeamMarkerComponent,
+    TableComponent,
+    OrderbyPPipe,
 
   ],
   entryComponents: [

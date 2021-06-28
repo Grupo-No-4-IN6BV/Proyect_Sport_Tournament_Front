@@ -1,23 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { fadeIn } from 'src/app/animations/animations';
 import { Match } from 'src/app/models/match';
-import { RestLeagueService } from 'src/app/services/restLeague/rest-league.service';
 import { RestTeamService } from 'src/app/services/restTeam/rest-team.service';
 
-import { BrowserModule } from '@angular/platform-browser';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
-import { fadeIn } from 'src/app/animations/animations';
-import { ActivatedRoute } from '@angular/router';
-
-
 @Component({
-  selector: 'app-statistics',
-  templateUrl: './statistics.component.html',
-  styleUrls: ['./statistics.component.css'],
+  selector: 'app-table',
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.css'],
   animations: [fadeIn]
 })
-export class StatisticsComponent implements OnInit {
-
-
+export class TableComponent implements OnInit {
+  
   teams:[]
   
   public token;
@@ -28,9 +22,11 @@ export class StatisticsComponent implements OnInit {
   public match: Match;
   idLeague;
   countTeams;
+  matches: any[]
+  single: any[];
+  view: any[] = [700, 400];
 
-  constructor(private restLeague: RestLeagueService,private restTeam:RestTeamService, private route: ActivatedRoute) { 
-  }
+  constructor(private restTeam:RestTeamService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.idLeague = this.route.snapshot.paramMap.get("id")
@@ -39,9 +35,6 @@ export class StatisticsComponent implements OnInit {
     this.jornadaSelect = 0;
     this.listMatch()
   }
-
-
-
 
   listMatch(){
     this.match.idMatch = this.jornadaSelect;
@@ -57,32 +50,8 @@ export class StatisticsComponent implements OnInit {
     },
     error => alert(error.error.message))
   }
-  
-
-  matches: any[]
-  single: any[];
-  view: any[] = [700, 400];
-
-  // options
-  gradient: boolean = true;
-  showLegend: boolean = true;
-  showLabels: boolean = true;
-  isDoughnut: boolean = false;
-  legendPosition: string = 'right';
-
-  colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
-  };
-
 
   counter() {
     return new Array(this.countTeams);
+  }
 }
-
-
-  
-  
-}
-
-
-

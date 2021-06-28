@@ -23,6 +23,7 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
   }
   
   onSubmit(register){
@@ -61,7 +62,7 @@ export class RegisterComponent implements OnInit {
         }else{
           localStorage.setItem('token', this.token)
           localStorage.setItem('user', JSON.stringify(res.user));
-          this.router.navigateByUrl('administration')
+          this.router.navigateByUrl('league')
         }
       }
     },

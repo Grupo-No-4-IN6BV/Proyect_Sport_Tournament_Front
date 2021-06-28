@@ -31,11 +31,10 @@ export class AdministrationComponent implements OnInit {
     this.edit = false;
   }
 
-
-  
   editarbtn(){
     this.edit=true;
   }
+  
   canceledit(){
     this.edit=false;
   }

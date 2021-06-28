@@ -10,12 +10,12 @@
         </a>
     </div>
    <mat-action-list>
-        <button mat-list-item routerLink="/administration"><span class="material-icons" id="icohome">home</span> Inicio </button>
+        <button mat-list-item routerLink="/administration" *ngIf="user.role =='ROLE_ADMIN'"><span class="material-icons" id="icohome">home</span> Inicio </button>
+        <button mat-list-item *ngIf="user.role =='ROLE_USER'"><span class="material-icons" id="icohome">home</span> Inicio </button>
         <mat-divider></mat-divider>
         <button mat-list-item routerLink="/league"><span class="material-icons" id="icons">sports_esports</span> Ligas </button>
-        <button mat-list-item routerLink="/users"><span class="material-icons" id="icons">people_outline</span> Usuarios </button>
-        <button mat-list-item routerLink="/statistics"><span class="material-icons" id="icons">assessment</span> Estadisticas </button>
-        <button mat-list-item ><span class="material-icons" id="icons">history</span> Historial </button>
+        <button mat-list-item routerLink="/users" *ngIf="user.role =='ROLE_ADMIN'"><span class="material-icons" id="icons">people_outline</span> Usuarios </button>
+        <button mat-list-item routerLink="/statistics" *ngIf="user.role =='ROLE_ADMIN'"><span class="material-icons" id="icons">assessment</span> Estadisticas </button>
         <button mat-list-item routerLink="/user"><span class="material-icons" id="icohome">person_pin</span> Personal </button>
         <mat-divider></mat-divider>
         <button mat-list-item routerLink="/user"><span class="material-icons" id="icons" >manage_accounts</span> Perfil </button>

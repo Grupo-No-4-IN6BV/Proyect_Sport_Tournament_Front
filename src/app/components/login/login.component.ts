@@ -59,7 +59,12 @@ export class LoginComponent implements OnInit {
             verticalPosition: this.verticalPosition,
             panelClass: ['mat-toolbar', 'mat-accent']
           });
-          this.router.navigateByUrl('administration')
+          if(res.user.role == 'ROLE_ADMIN'){
+            this.router.navigateByUrl('administration')
+          }else{
+            this.router.navigateByUrl('league')
+          }
+          
         }
       }
     },
