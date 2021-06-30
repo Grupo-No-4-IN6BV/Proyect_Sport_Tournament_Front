@@ -108,6 +108,7 @@ export class UsersComponent implements OnInit {
 export class UserSaveComponent implements OnInit {
     public token;
     public user: User;
+    public message;
     public userLogg;
     public roleOptions = ['ROLE_ADMIN', 'ROLE_USER']
 
@@ -123,15 +124,21 @@ export class UserSaveComponent implements OnInit {
 
     onSubmit(saveUserByAdmin){
       this.userService.saveUserByAdmin(this.user, this.userLogg._id).subscribe((res:any)=>{
+          this.message = res.message;
           if(res.userSaved){
-            alert(res.message);
             this.user = new User('','','','','','','',[]);
             saveUserByAdmin.reset();
+            this.snackBar.open('Usuario creado correctamente', 'cerrar', {
+              duration: 2000,
+              horizontalPosition: 'center',
+              verticalPosition: 'top',
+              panelClass: ['mat-toolbar', 'mat-accent']
+            });
           }else{
-            alert(res.message)
+            alert(this.message);
           }
       },
-      error=> alert(error.error.message)
+      error=> console.log(<any>error)
       )
     }
 }
