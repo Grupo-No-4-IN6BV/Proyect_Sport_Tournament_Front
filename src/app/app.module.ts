@@ -17,7 +17,7 @@ import { LeagueComponent, LeagueRemoveComponent, LeagueSaveComponent, LeagueUpda
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { DialogOverviewExampleDialog, UserComponent, UserdeleteComponent } from './components/user/user.component';
 import { MaterialModule } from './styles/material.module';
-import { UsersComponent } from './components/users/users.component';
+import { UserSaveComponent, UsersComponent } from './components/users/users.component';
 import { ListUsersComponent } from './components/list-users/list-users.component';
 import { TeamComponent, TeamMarkerComponent, TeamSaveComponent, TeamUpdateComponent, TeamRemoveComponent } from './components/team/team.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -60,6 +60,7 @@ import { OrderbyPPipe } from './pipe/orderbyP/orderby-p.pipe';
     TeamMarkerComponent,
     TableComponent,
     OrderbyPPipe,
+    UserSaveComponent
 
   ],
   entryComponents: [
