@@ -20,13 +20,7 @@
                 <mat-label for="inputEmail">Email</mat-label>
                 <input type="text" matInput [(ngModel)]="user.email" name="email" #email="ngModel" required autocomplete="off">
             </mat-form-field>
-              <div class="form-check">
-                <label id="terminos"  class="form-check-label" for="gridCheck" style="font-size: 12px; width: 100%;"><mat-checkbox></mat-checkbox>&nbsp;&nbsp; Al registrarte, aceptas nuetras Condiciones, la Politica de datos y Politica de Cookies</label>
-            </div>  
           <button mat-raised-button  [disabled]="!register.form.valid"  color="accent" style="justify-content: center;margin-top: 15px;" type="submit">Iniciar sesión</button><br>
-          <hr>
-          <label>¿Ya posees una cuenta?</label><br>
-          <a routerLink="/login">Registrarse</a><br>
       </form>
   </mat-card>
   </div>

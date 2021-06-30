@@ -11,6 +11,7 @@ export class RestUserService {
   public uri: string;
   public token;
   public user;
+  public userSelect;
 
   constructor(private http:HttpClient) {
     this.uri = CONNECTION.URI;
@@ -95,6 +96,25 @@ export class RestUserService {
       'Authorization': this.getToken()
     });
     return this.http.post(this.uri+'saveUserByAdmin', params, {headers: headers})
+    .pipe(map(this.extractData))
+  }
+
+  removeUserByAdmin(idUserSelect, idAdmin){
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.getToken()
+    });
+    return this.http.delete(this.uri+'removeUserByAdmin/'+idUserSelect, {headers: headers})
+    .pipe(map(this.extractData))
+  }
+
+  userUpdateByAdmin(idUser, userToUpdate){
+    let params = JSON.stringify(userToUpdate);
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.getToken()
+    });
+    return this.http.put(this.uri+'/updateLeague/'+idUser, params, {headers: headers})
     .pipe(map(this.extractData))
   }
 }
