@@ -78,7 +78,6 @@ export class UserSaveComponent implements OnInit {
       this.userService.saveUserByAdmin(this.user, this.userLogg._id).subscribe((res:any)=>{
           this.message = res.message;
           if(res.userSaved){
-            alert(res.message);
             this.user = new User('','','','','','','',[]);
             saveUserByAdmin.reset();
             this.snackBar.open('Usuario creado correctamente', 'cerrar', {
