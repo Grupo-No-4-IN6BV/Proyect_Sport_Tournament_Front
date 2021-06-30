@@ -24,10 +24,10 @@
                 </div>
                 <div class="col-lg-4" style="text-align: end;">
                     <button *ngIf="user.role=='ROLE_USER'" mat-mini-fab style="background-color: #ccc42d; margin-right: 15px;" >
-                        <span class="material-icons"  (click)="getLeague(league)" (click)="openUpdate()" >edit</span>
+                        <span class="material-icons"  (click)="getUserSelect(user)" (click)="openUpdate()" >edit</span>
                     </button>
                       <button *ngIf="user.role=='ROLE_USER'"  mat-mini-fab color="warn">
-                        <span class="material-icons" (click)="getLeague(league)" (click)="openDelete()">delete</span>
+                        <span class="material-icons" (click)="getUserSelect(user)" (click)="openDelete()">delete</span>
                     </button>
                 </div>
             </div>
