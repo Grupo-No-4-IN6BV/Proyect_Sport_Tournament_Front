@@ -101,6 +101,17 @@ export class LeagueComponent implements OnInit {
 
 
 @Component({
+  selector: 'league-admin-app',
+  templateUrl: 'league.admin.component.html'
+})
+
+export class LeagueAdminComponent implements OnInit {
+  constructor() { }
+
+  ngOnInit() { }
+}
+
+@Component({
   selector: 'app-leagueupdate',
   templateUrl: './league.update.component.html',
   styleUrls: ['./league.component.css'],

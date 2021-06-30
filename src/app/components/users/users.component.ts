@@ -89,8 +89,7 @@ export class UsersComponent implements OnInit {
   listUsers(){
     this.restUser.getUsers().subscribe((res:any)=>{
       if(res.users){
-        this.users = res.users;
-        console.log(res.users)
+        this.users = res.users.reverse();
       }else{
         alert(res.message)
       }
