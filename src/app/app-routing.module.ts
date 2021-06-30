@@ -12,22 +12,23 @@ import { TableComponent } from './components/table/table.component';
 import { TeamComponent } from './components/team/team.component';
 import { UserComponent } from './components/user/user.component';
 import { UsersComponent } from './components/users/users.component';
+import { AdminGuard } from './guard/admin.guard';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'},
-  {path: 'administration', component: AdministrationComponent},
+  {path: 'administration', canActivate: [AdminGuard], component: AdministrationComponent},
   {path: 'league', component: LeagueComponent},
-  {path: 'list-users', component: ListUsersComponent},
+  {path: 'list-users', canActivate: [AdminGuard], component: ListUsersComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent },
   {path: ':id/statistics', component: StatisticsComponent},
   {path: 'user', component: UserComponent},
-  {path: 'users', component: UsersComponent},
+  {path: 'users', canActivate: [AdminGuard], component: UsersComponent},
   {path: ':id/teams', component: TeamComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: ':id/table', component: TableComponent},
-  {path: 'statistics', component: statisticsAdmin}
+  {path: 'statistics', canActivate: [AdminGuard], component: statisticsAdmin}
 ];
 
 @NgModule({
