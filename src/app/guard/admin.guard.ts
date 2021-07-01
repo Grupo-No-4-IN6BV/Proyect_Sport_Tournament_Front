@@ -16,7 +16,7 @@ export class AdminGuard implements CanActivate {
       }else{
         let token = this.restUser.getToken();
         if(user && token.length > 0){
-          this.router.navigateByUrl('user');
+          this.router.navigateByUrl('league');
           return false;
         }else {
           this.router.navigateByUrl('home');

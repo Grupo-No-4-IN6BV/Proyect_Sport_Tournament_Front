@@ -128,11 +128,11 @@ export class LeagueAdminComponent implements OnInit {
   searchforL;
   
 
-  constructor( private router:Router,  private restLeague:RestLeagueService, public dialog: MatDialog) { }
+  constructor(private router:Router,  private restLeague:RestLeagueService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.listLeagues()
-    this.leagueSelected = new League('','','',[], '');
+    this.leagueSelected = new League('','','',[],'');
   }
   getLeague(league){
     console.log(league)
@@ -140,8 +140,6 @@ export class LeagueAdminComponent implements OnInit {
     this.nameleagueSelected = this.leagueSelected.name;
     this.idleagueSelected = this.leagueSelected._id;
     this.imageleagueSelected = this.leagueSelected.image;
-    console.log(this.leagueSelected.user)
-
   }
 
   goTeam(league){
