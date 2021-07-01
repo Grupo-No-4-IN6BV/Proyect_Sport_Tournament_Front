@@ -13,6 +13,8 @@ export interface DialogData {
   name: string;
   id: string;
   image: string;
+  idUser: string;
+  role: string;
 }
 
 @Component({
@@ -35,13 +37,14 @@ export class LeagueComponent implements OnInit {
   idleagueSelected: String;
   imageleagueSelected: String;
   
+  
 
   constructor(private restUser:RestUserService, private router:Router,  private restLeague:RestLeagueService, public dialog: MatDialog) {
 
   }
 
   ngOnInit(): void {
-    this.leagueSelected = new League('','','',[]);
+    this.leagueSelected = new League('','','',[], '');
     this.user = this.restUser.getUser();
     this.leagues = this.user.leagues;
     console.log(this.leagues)
@@ -51,8 +54,9 @@ export class LeagueComponent implements OnInit {
     this.leagueSelected = league;
     this.nameleagueSelected = this.leagueSelected.name;
     this.idleagueSelected = this.leagueSelected._id;
-    this.imageleagueSelected = this.leagueSelected.image;
-   
+    this.imageleagueSelected = this.leagueSelected.user;
+
+
   }
 
   goTeam(league){
@@ -79,7 +83,7 @@ export class LeagueComponent implements OnInit {
     const dialogRef = this.dialog.open(LeagueRemoveComponent, {
       height: '200px',
       width: '400px',
-      data: {name: this.nameleagueSelected, id: this.idleagueSelected}
+      data: {name: this.nameleagueSelected, id: this.idleagueSelected, idUser: this.user._id}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -91,7 +95,7 @@ export class LeagueComponent implements OnInit {
     const dialogRef = this.dialog.open(LeagueUpdateComponent, {
       height: '450px',
       width: '800px',
-      data: {name: this.nameleagueSelected, id: this.idleagueSelected}
+      data: {name: this.nameleagueSelected, id: this.idleagueSelected, idUser: this.user._id}
     });
     dialogRef.afterClosed().subscribe(result => {
       this.ngOnInit();
@@ -102,14 +106,95 @@ export class LeagueComponent implements OnInit {
 
 @Component({
   selector: 'league-admin-app',
-  templateUrl: 'league.admin.component.html'
+  templateUrl: 'league.admin.component.html',
+  styleUrls: ['./league.component.css'],
+  animations: [
+    fadeIn,
+    largein
+  ],
 })
 
 export class LeagueAdminComponent implements OnInit {
-  constructor() { }
 
-  ngOnInit() { }
+  panelOpenState = false;
+  leagues:[];
+  user;
+  leagueSelected:League;
+  parentMessage: string;
+  nameleagueSelected: String;
+  idleagueSelected: String;
+  imageleagueSelected: String;
+  
+
+  constructor( private router:Router,  private restLeague:RestLeagueService, public dialog: MatDialog) { }
+
+  ngOnInit(): void {
+    this.listLeagues()
+    this.leagueSelected = new League('','','',[], '');
+  }
+  getLeague(league){
+    this.leagueSelected = league;
+    this.nameleagueSelected = this.leagueSelected.name;
+    this.idleagueSelected = this.leagueSelected._id;
+    this.imageleagueSelected = this.leagueSelected.image;
+    this.user = this.leagueSelected.user; 
+
+  }
+
+  goTeam(league){
+    this.router.navigate([league._id,'teams']);
+  }
+
+
+  listLeagues(){
+    this.restLeague.getLeagues().subscribe((res:any)=>{
+      if(res.leagues){
+        this.leagues = res.leagues
+      }else{
+        alert(res.message)
+      }
+    },
+    error => alert(error.error.message))
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(LeagueSaveComponent, {
+      height: '330px',
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
+      console.log('The dialog was closed');
+    });
+  }
+
+  openDelete(): void {
+    const dialogRef = this.dialog.open(LeagueRemoveComponent, {
+      height: '200px',
+      width: '400px',
+      data: {name: this.nameleagueSelected, id: this.idleagueSelected, idUser: this.user._id, role:'Admin'}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
+    });
+  }
+
+  openUpdate(): void {
+    const dialogRef = this.dialog.open(LeagueUpdateComponent, {
+      height: '450px',
+      width: '800px',
+      data: {name: this.nameleagueSelected, id: this.idleagueSelected, idUser: this.user._id, role:'Admin'}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
+    });
+  }
 }
+
+
+
 
 @Component({
   selector: 'app-leagueupdate',
@@ -137,12 +222,17 @@ export class LeagueUpdateComponent implements OnInit {
   }
 
   updateLeague(){
-    this.restLeague.updateLeague(this.user._id, this.data).subscribe((res:any)=>{
+    this.restLeague.updateLeague(this.data.idUser, this.data).subscribe((res:any)=>{
       if(res.userLeagueAct){
         alert(res.message)
         this.user= res.userLeagueAct
-        localStorage.setItem('user', JSON.stringify(this.user));
-        this.ngOnInit();
+        if(this.data.role == 'Admin'){
+          this.dialogRef.close();
+        }else{
+          localStorage.setItem('user', JSON.stringify(this.user));
+          this.ngOnInit();
+        }
+        
       }else{
         alert(res.message);
         this.user = this.restUser.getUser()
@@ -179,12 +269,16 @@ export class LeagueRemoveComponent implements OnInit {
     this.dialogRef.close();
   }
   removeLeague(){
-    this.restLeague.removeLeague(this.user._id, this.data.id).subscribe((res:any)=>{
+    this.restLeague.removeLeague(this.data.idUser, this.data.id).subscribe((res:any)=>{
       if(res.leaguePull){
         alert(res.message);
+        if(this.data.role == 'Admin'){
+          this.dialogRef.close();
+        }else{
         localStorage.setItem('user', JSON.stringify(res.leaguePull))
         this.user = this.restUser.getUser()
         this.leagues = this.user.leagues;
+        }
       }else{
         alert(res.message);
       }
@@ -218,7 +312,7 @@ export class LeagueSaveComponent implements OnInit {
   }
 
   constructor(private restUser:RestUserService, private router:Router, private restLeague:RestLeagueService) {
-    this.league = new League('','','',[]);
+    this.league = new League('','','',[], '');
     this.user = JSON.parse(localStorage.getItem('user'));
    }
 

@@ -13,7 +13,7 @@ import { LoginComponent } from './components/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AdministrationComponent } from './components/administration/administration.component';
-import { LeagueComponent, LeagueRemoveComponent, LeagueSaveComponent, LeagueUpdateComponent } from './components/league/league.component';
+import { LeagueAdminComponent, LeagueComponent, LeagueRemoveComponent, LeagueSaveComponent, LeagueUpdateComponent } from './components/league/league.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { DialogOverviewExampleDialog, UserComponent, UserdeleteComponent } from './components/user/user.component';
 import { MaterialModule } from './styles/material.module';
@@ -62,7 +62,8 @@ import { OrderbyPPipe } from './pipe/orderbyP/orderby-p.pipe';
     OrderbyPPipe,
     UserSaveComponent,
     UserRemoveComponent,
-    UserUpdateComponentByAdmin
+    UserUpdateComponentByAdmin,
+    LeagueAdminComponent
   ],
   entryComponents: [
     RegisterComponent,

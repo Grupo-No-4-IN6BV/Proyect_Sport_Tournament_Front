@@ -56,4 +56,12 @@ export class RestLeagueService {
    }
    
 
+   getLeagues(){
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.restUser.getToken()
+    });
+    return this.http.get(this.uri+'getleagues', {headers: headers})
+    .pipe(map(this.extractData))
+  }
 }
