@@ -108,13 +108,13 @@ export class RestUserService {
     .pipe(map(this.extractData))
   }
 
-  userUpdateByAdmin(idUser, userToUpdate){
-    let params = JSON.stringify(userToUpdate);
+  userUpdateByAdmin(idUserSelect, userToUpdate, idAdmin){
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': this.getToken()
     });
-    return this.http.put(this.uri+'/updateLeague/'+idUser, params, {headers: headers})
+    let params = JSON.stringify(userToUpdate);
+    return this.http.put(this.uri+'updateUserByAdmin/'+idUserSelect, params, {headers: headers})
     .pipe(map(this.extractData))
   }
 }

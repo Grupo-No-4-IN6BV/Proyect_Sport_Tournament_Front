@@ -31,7 +31,10 @@ export class UsersComponent implements OnInit {
   users:[];
   userSelect;
   userSelected: User;
+  nameUserSelected: String;
   usernameUserSelected: String;
+  emailUserSelected: String;
+  userRoleSelected: String;
   iduserSelected: String;
   imageuserSelected: String;
 
@@ -44,7 +47,10 @@ export class UsersComponent implements OnInit {
 
   getUserSelect(user){
     this.userSelected = user;
-    this.usernameUserSelected = this.userSelected.name;
+    this.nameUserSelected = this.userSelected.name;
+    this.usernameUserSelected = this.userSelected.username;
+    this.emailUserSelected = this.userSelected.email;
+    this.userRoleSelected = this.userSelected.role;
     this.iduserSelected = this.userSelected._id;
     this.imageuserSelected = this.userSelected.image;
     console.log(user)
@@ -79,7 +85,7 @@ export class UsersComponent implements OnInit {
     const dialogRef = this.dialog.open(UserUpdateComponentByAdmin, {
       height: '450px',
       width: '800px',
-      data: {username: this.usernameUserSelected, id: this.iduserSelected}
+      data: {name: this.nameUserSelected, username: this.usernameUserSelected, email: this.emailUserSelected, role: this.userRoleSelected, id: this.iduserSelected}
     });
     dialogRef.afterClosed().subscribe(result => {
       this.ngOnInit();
@@ -194,11 +200,13 @@ export class UserUpdateComponentByAdmin implements OnInit {
   leagues:[];
   user;
   userSelect;
+  public token;
+  public userLogg;
   public roleOptions = ['ROLE_ADMIN', 'ROLE_USER']
 
   ngOnInit(): void {
-    this.user = this.restUser.getUser();
-    this.leagues = this.user.leagues;
+    this.userLogg = this.restUser.getUser();
+    this.token = this.restUser.getToken();
   }
 
   constructor(public dialogRef: MatDialogRef<UserUpdateComponentByAdmin>,
@@ -208,17 +216,14 @@ export class UserUpdateComponentByAdmin implements OnInit {
     this.dialogRef.close();
   }
 
-  updateLeague(){
-    this.restUser.userUpdateByAdmin(this.user._id, this.data).subscribe((res:any)=>{
-      if(res.userLeagueAct){
+  userUpdateByAdmin(){
+    this.restUser.userUpdateByAdmin(this.data.id, this.data, this.userLogg._id).subscribe((res:any)=>{
+      if(res.userUpdated){
         alert(res.message)
-        this.user= res.userLeagueAct
-        localStorage.setItem('user', JSON.stringify(this.user));
+        this.user= res.userUpdated
         this.ngOnInit();
       }else{
         alert(res.message);
-        this.user = this.restUser.getUser()
-        this.leagues = this.user.leagues;
       }
     },
     error => alert(error.error.message))
