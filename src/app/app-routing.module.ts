@@ -28,7 +28,7 @@ const routes: Routes = [
   {path: ':id/teams', component: TeamComponent},
   {path: 'not-found', component: NotFoundComponent},
   {path: ':id/table', component: TableComponent},
-  {path: 'leagues', component: LeagueAdminComponent}
+  {path: 'leagues', component: LeagueAdminComponent},
   {path: 'statistics', canActivate: [AdminGuard], component: statisticsAdmin}
 ];
 
