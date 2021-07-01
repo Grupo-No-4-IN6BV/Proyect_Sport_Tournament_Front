@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { AdministrationComponent } from './components/administration/administration.component';
 import { LeagueAdminComponent, LeagueComponent, LeagueRemoveComponent, LeagueSaveComponent, LeagueUpdateComponent } from './components/league/league.component';
-import { StatisticsComponent } from './components/statistics/statistics.component';
+import { statisticsAdmin, StatisticsComponent } from './components/statistics/statistics.component';
 import { DialogOverviewExampleDialog, UserComponent, UserdeleteComponent } from './components/user/user.component';
 import { MaterialModule } from './styles/material.module';
 import { UserSaveComponent, UsersComponent, UserRemoveComponent, UserUpdateComponentByAdmin } from './components/users/users.component';
@@ -28,6 +28,9 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ChartsModule } from 'ng2-charts';
 import { TableComponent } from './components/table/table.component';
 import { OrderbyPPipe } from './pipe/orderbyP/orderby-p.pipe';
+import { SearchPipe } from './pipe/search/search.pipe';
+import { SearchforLPipe } from './pipe/searchforL/searchfor-l.pipe';
+
 
 
 
@@ -63,7 +66,11 @@ import { OrderbyPPipe } from './pipe/orderbyP/orderby-p.pipe';
     UserSaveComponent,
     UserRemoveComponent,
     UserUpdateComponentByAdmin,
-    LeagueAdminComponent
+    LeagueAdminComponent,
+    statisticsAdmin,
+    SearchPipe,
+    SearchforLPipe
+
   ],
   entryComponents: [
     RegisterComponent,

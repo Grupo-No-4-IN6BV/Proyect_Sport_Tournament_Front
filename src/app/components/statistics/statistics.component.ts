@@ -87,7 +87,9 @@ export class StatisticsComponent implements OnInit {
 
 @Component({
   selector: 'statistics-admin-app',
-  templateUrl: 'statistics.admin.component.html'
+  templateUrl: 'statistics.admin.component.html',
+  styleUrls: ['./statistics.component.css'],
+  animations: [fadeIn]
 })
 
 export class statisticsAdmin implements OnInit {
@@ -106,22 +108,14 @@ export class statisticsAdmin implements OnInit {
   }
 
   ngOnInit(): void {
-    this.idLeague = this.route.snapshot.paramMap.get("id")
-    this.user = JSON.parse(localStorage.getItem('user'));
-    this.match = new Match('',0,0,0,0,0,0,'')
-    this.jornadaSelect = 0;
     this.listMatch()
   }
 
 
-
-
   listMatch(){
-    this.match.idMatch = this.jornadaSelect;
-    this.restTeam.getMatches(this.idLeague, this.match).subscribe((res:any)=>{
+    this.restTeam.getMatchesAdmin().subscribe((res:any)=>{
       if(res.matches){
         this.matches = res.matches;
-        this.countTeams = res.countTeams-1
         console.log(this.matches)
         
       }else{
@@ -133,24 +127,22 @@ export class statisticsAdmin implements OnInit {
   
 
   matches: any[]
-  single: any[];
-  view: any[] = [700, 400];
+  view: any[] = [1300, 500];
 
   // options
-  gradient: boolean = true;
+  showXAxis: boolean = true;
+  showYAxis: boolean = true;
+  gradient: boolean = false;
   showLegend: boolean = true;
-  showLabels: boolean = true;
-  isDoughnut: boolean = false;
-  legendPosition: string = 'right';
+  showXAxisLabel: boolean = true;
+  yAxisLabel: string = 'Puntos Globales';
+  showYAxisLabel: boolean = true;
+  xAxisLabel: string = 'Partidos Globales';
+  legendTitle: string = 'Equipos'
 
   colorScheme = {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
-
-
-  counter() {
-    return new Array(this.countTeams);
-  }
 }
 
 

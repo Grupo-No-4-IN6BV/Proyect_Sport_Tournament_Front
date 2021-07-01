@@ -68,6 +68,15 @@ export class RestTeamService {
     .pipe(map(this.extractData))
   }
 
+  getMatchesAdmin(){
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.getToken()
+    });
+    return this.http.get(this.uri+'getMatchesAdmin', {headers: headers})
+    .pipe(map(this.extractData))
+  }
+
   removeTeam(idLeague, idTeam){
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',

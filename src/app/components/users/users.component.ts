@@ -37,6 +37,7 @@ export class UsersComponent implements OnInit {
   userRoleSelected: String;
   iduserSelected: String;
   imageuserSelected: String;
+  search;
 
   constructor(private restUser:RestUserService, private router:Router, public dialog: MatDialog, public snackBar: MatSnackBar) { }
 
@@ -55,6 +56,7 @@ export class UsersComponent implements OnInit {
     this.imageuserSelected = this.userSelected.image;
     console.log(user)
   }
+  
 
   openDialog(): void{
     const dialogRef = this.dialog.open(UserSaveComponent, {
@@ -203,6 +205,7 @@ export class UserUpdateComponentByAdmin implements OnInit {
   public token;
   public userLogg;
   public roleOptions = ['ROLE_ADMIN', 'ROLE_USER']
+  
 
   ngOnInit(): void {
     this.userLogg = this.restUser.getUser();

@@ -124,6 +124,8 @@ export class LeagueAdminComponent implements OnInit {
   nameleagueSelected: String;
   idleagueSelected: String;
   imageleagueSelected: String;
+  search;
+  searchforL;
   
 
   constructor( private router:Router,  private restLeague:RestLeagueService, public dialog: MatDialog) { }
@@ -133,11 +135,12 @@ export class LeagueAdminComponent implements OnInit {
     this.leagueSelected = new League('','','',[], '');
   }
   getLeague(league){
+    console.log(league)
     this.leagueSelected = league;
     this.nameleagueSelected = this.leagueSelected.name;
     this.idleagueSelected = this.leagueSelected._id;
     this.imageleagueSelected = this.leagueSelected.image;
-    this.user = this.leagueSelected.user; 
+    console.log(this.leagueSelected.user)
 
   }
 
@@ -173,7 +176,7 @@ export class LeagueAdminComponent implements OnInit {
     const dialogRef = this.dialog.open(LeagueRemoveComponent, {
       height: '200px',
       width: '400px',
-      data: {name: this.nameleagueSelected, id: this.idleagueSelected, idUser: this.user._id, role:'Admin'}
+      data: {name: this.nameleagueSelected, id: this.idleagueSelected, idUser: this.leagueSelected.user, role:'Admin'}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -185,7 +188,7 @@ export class LeagueAdminComponent implements OnInit {
     const dialogRef = this.dialog.open(LeagueUpdateComponent, {
       height: '450px',
       width: '800px',
-      data: {name: this.nameleagueSelected, id: this.idleagueSelected, idUser: this.user._id, role:'Admin'}
+      data: {name: this.nameleagueSelected, id: this.idleagueSelected, idUser: this.leagueSelected.user, role:'Admin'}
     });
     dialogRef.afterClosed().subscribe(result => {
       this.ngOnInit();

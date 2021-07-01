@@ -4,13 +4,13 @@
     </h1>
     <mat-form-field appearance="fill" style="width: 100vh;">
         <mat-label>Buscar Usuario</mat-label>
-        <input matInput placeholder="Usuario" autocomplete="off">
+        <input matInput [(ngModel)]="search" type="search" name="search" placeholder="Usuario" autocomplete="off">
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
     <button  style="margin-left: 25px;" mat-fab color="accent" (click)="openDialog()"><span class="material-icons">add</span></button>
 </div>
 <div [@largein] class="  row justify-content-center " >
-        <mat-card class="gradient-border"  *ngFor="let user of users" style="width: 110vh; margin-top: 40px; background-color: rgb(30, 39, 70);"> 
+        <mat-card class="gradient-border"  *ngFor="let user of users | search: search" style="width: 110vh; margin-top: 40px; background-color: rgb(30, 39, 70);"> 
             <div class="row">
                 <div class="col-lg-2" style="text-align: center;">
                     <img src="{{user.image}}" alt="" style="width: 100px;">
