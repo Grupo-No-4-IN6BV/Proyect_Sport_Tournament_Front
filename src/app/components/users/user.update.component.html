@@ -1,26 +1,24 @@
-<form #updateUserByAdmin="ngForm">
-    <h2>Actualizar usuario</h2>
-    <mat-form-field  class="example-form-field" style="margin-left: 20px; width: 90%;">
-        <input matInput type="text" [(ngModel)]="user.name" type="text" id="passwordRemoved" name="name" placeholder="Nombre" autocomplete="off">
-      </mat-form-field>
-      <mat-form-field  class="example-form-field" style="margin-left: 20px; width: 90%;">
-        <input matInput type="text" [(ngModel)]="userSelect.username" type="test" id="passwordRemoved" name="username" placeholder="Username" autocomplete="off">
-      </mat-form-field>
-      <mat-form-field  class="example-form-field" style="margin-left: 20px; width: 90%;">
-        <input matInput type="text" [(ngModel)]="user.email" type="test" id="passwordRemoved" name="email" placeholder="Email" autocomplete="off">
-      </mat-form-field>
-      <mat-form-field  class="example-form-field" style="margin-left: 20px; width: 90%;">
-        <input matInput type="text" [(ngModel)]="user.password" type="test" id="passwordRemoved" name="password" placeholder="Contraseña" autocomplete="off">
-      </mat-form-field>
-      <mat-form-field  class="example-form-field" style="margin-left: 20px; width: 90%;">
-        <mat-select [(ngModel)]="user.role" name="role" id="selectRole"> 
-            <mat-option value="" disabled selected>Selecciona un rol</mat-option>
-            <mat-option *ngFor="let option of roleOptions" [value]="option">{{option}}</mat-option>
-        </mat-select> 
-      </mat-form-field>
+<h2>Editar Usuario</h2>
+
+<mat-form-field  class="example-form-field" style="margin-left: 20px; width: 90%;">
+  <input matInput type="text" [(ngModel)]="data.username" id="username" name="username" placeholder="Username"  autocomplete="off">
+</mat-form-field><br>
+<mat-form-field  class="example-form-field" style="margin-left: 20px; width: 90%;">
+  <input matInput type="text" [(ngModel)]="data.name" id="name" name="name" placeholder="Name" autocomplete="off">
+</mat-form-field><br>
+<mat-form-field  class="example-form-field" style="margin-left: 20px; width: 90%;">
+  <input matInput type="text" [(ngModel)]="data.email" id="email" name="email" placeholder="Email" autocomplete="off">
+</mat-form-field><br>
+   
+<mat-form-field  class="example-form-field" style="margin-left: 20px; width: 90%;">
+  <mat-select [(ngModel)]="data.role" name="role" id="selectRole"> 
+      <mat-option value="" disabled selected>Configurar Rol</mat-option>
+      <mat-option *ngFor="let option of roleOptions" [value]="option">{{option}}</mat-option>
+  </mat-select> 
+</mat-form-field>
+
       
-      <br><br>
-      <div class="button">
-        <button type="submit" mat-flat-button color="accent">Actualizar usuario</button>
-      </div>  
-</form>
+<br><br>
+<div class="button">
+  <button mat-raised-button color="accent" (click)="userUpdateByAdmin()">Actualizar Usuario</button>
+</div>
