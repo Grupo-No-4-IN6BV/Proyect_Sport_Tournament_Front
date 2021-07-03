@@ -60,7 +60,7 @@ export class UsersComponent implements OnInit {
 
   openDialog(): void{
     const dialogRef = this.dialog.open(UserSaveComponent, {
-      height: '500px',
+      height: '445px',
       width: '400px'
     });
 
@@ -73,8 +73,8 @@ export class UsersComponent implements OnInit {
   openDelete(): void {
     console.log('llega aqui');
     const dialogRef = this.dialog.open(UserRemoveComponent, {
-      height: '200px',
-      width: '400px',
+      height: '227px',
+      width: '800px',
       data: {username: this.usernameUserSelected, id: this.iduserSelected}
     });
 
@@ -85,8 +85,8 @@ export class UsersComponent implements OnInit {
 
   openUpdate(): void {
     const dialogRef = this.dialog.open(UserUpdateComponentByAdmin, {
-      height: '450px',
-      width: '800px',
+      height: '400px',
+      width: '400px',
       data: {name: this.nameUserSelected, username: this.usernameUserSelected, email: this.emailUserSelected, role: this.userRoleSelected, id: this.iduserSelected}
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -120,7 +120,8 @@ export class UserSaveComponent implements OnInit {
     public userLogg;
     public roleOptions = ['ROLE_ADMIN', 'ROLE_USER']
 
-    constructor(private restUser:RestUserService, private router:Router, private userService:RestUserService, public snackBar: MatSnackBar) {
+    constructor(public dialogRef: MatDialogRef<UserRemoveComponent>,
+      @Inject(MAT_DIALOG_DATA) public data: DialogData,private restUser:RestUserService, private router:Router, private userService:RestUserService, public snackBar: MatSnackBar) {
       this.user = new User('','','','','','','',[]);
       this.token = this.restUser.getToken();
       this.userLogg = this.restUser.getUser();
@@ -128,6 +129,9 @@ export class UserSaveComponent implements OnInit {
 
     ngOnInit(): void {
       
+    }
+    onNoClick(): void {
+      this.dialogRef.close();
     }
 
     onSubmit(saveUserByAdmin){
@@ -167,7 +171,7 @@ export class UserRemoveComponent implements OnInit {
   public userLogg;
 
   constructor(public dialogRef: MatDialogRef<UserRemoveComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,  private restUser:RestUserService){}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,  private restUser:RestUserService, public snackBar: MatSnackBar){}
   
 
   ngOnInit(): void {
@@ -181,8 +185,13 @@ export class UserRemoveComponent implements OnInit {
   removeUserByAdmin(){
     this.restUser.removeUserByAdmin(this.data.id, this.userLogg._id).subscribe((res:any)=>{
       if(res.userRemoved){
-        alert(res.message);
-
+        this.snackBar.open(res.message, 'cerrar', {
+          duration: 2000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          panelClass: ['mat-toolbar', 'mat-warn']
+        });
+        this.dialogRef.close();
       }else{
         alert(res.message);
       }
@@ -213,7 +222,7 @@ export class UserUpdateComponentByAdmin implements OnInit {
   }
 
   constructor(public dialogRef: MatDialogRef<UserUpdateComponentByAdmin>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, private restUser:RestUserService){}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private restUser:RestUserService, public snackBar: MatSnackBar){}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -222,9 +231,15 @@ export class UserUpdateComponentByAdmin implements OnInit {
   userUpdateByAdmin(){
     this.restUser.userUpdateByAdmin(this.data.id, this.data, this.userLogg._id).subscribe((res:any)=>{
       if(res.userUpdated){
-        alert(res.message)
+        this.snackBar.open(res.message, 'cerrar', {
+          duration: 2000,
+          horizontalPosition: 'center',
+          verticalPosition: 'bottom',
+          panelClass: ['mat-toolbar', 'mat-accent']
+        });
         this.user= res.userUpdated
         this.ngOnInit();
+        this.dialogRef.close();
       }else{
         alert(res.message);
       }

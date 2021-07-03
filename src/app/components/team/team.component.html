@@ -5,27 +5,27 @@
       <div *ngFor="let team of teams;  last as isLast; let i = index" style="text-align: center;">
         <button  style="margin-left: 25px;" mat-fab color="accent" *ngIf="isLast" (click)="getcount(i)"><span class="material-icons">add</span></button>
         <button  style="margin-left: 25px;" mat-fab color="primary" *ngIf="isLast" (click)="getJorn(i)"><span class="material-icons">safety_divider</span></button>
-        <button  style="margin-left: 25px;" mat-fab color="accent" *ngIf="isLast" (click)="goStastics()"><span class="material-icons">trending_up</span></button>
-        <button  style="margin-left: 25px;" mat-fab color="accent" *ngIf="isLast" (click)="goTable()"><span class="material-icons">date_range</span></button>
+        <button  style="margin-left: 25px;" mat-fab color="accent" *ngIf="isLast" (click)="getGostatics(i)"><span class="material-icons">trending_up</span></button>
+        <button  style="margin-left: 25px;" mat-fab color="accent" *ngIf="isLast" (click)="getGotable(i)"><span class="material-icons">date_range</span></button>
       </div>
 </div>
-<div [@largein] class="  row justify-content-center " >
-    <div *ngFor="let team of teams | slice:1; let i = index" class="  row justify-content-center ">
-        <mat-card class="gradient-border"  style="width: 80vh; margin-top: 40px; background-color: rgb(30, 39, 70);"> 
+<div id="divKEKWTeamsGeneral" [@largein] class="m-0 text-center justify-content-center">
+    <div id="divKEKWTeams"  *ngFor="let team of teams | slice:1; let i = index" class="row;">
+        <mat-card id="cardTeams" class="gradient-border" style=" background-color: rgb(30, 39, 70); margin-right: 20px; "> 
             <div class="row">
-                <div class="col-lg-6" >
+                <div id="txtCard" class="col-lg-6" style="text-align: left;">
                     <h2>{{i+1}}) {{team.name}}</h2>
                 </div>
                 <div class="col-lg-2" style="text-align: center;">
-                    <img src="{{team.image}}" alt="" style="width: 50px;" >
+                    <img src="{{team.image}}" alt="" style="width: 80px;" >
                 </div>
                 <div class="col-lg-4" style="text-align: end;">
                     <button  mat-mini-fab style="background-color: #ccc42d; margin-right: 15px;" (click)="getTeam(team)" (click)="openUpdate()">
                         <span class="material-icons">edit</span>
                     </button>
-                      <button  mat-mini-fab color="warn" (click)="getTeam(team)" (click)="openDelete()">
+                      <button mat-mini-fab color="warn" (click)="getTeam(team)" (click)="openDelete()">
                         <span class="material-icons" >delete</span>   
-                    </button>  
+                    </button> 
                 </div>
             </div>
         </mat-card>

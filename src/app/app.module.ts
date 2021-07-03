@@ -30,7 +30,9 @@ import { TableComponent } from './components/table/table.component';
 import { OrderbyPPipe } from './pipe/orderbyP/orderby-p.pipe';
 import { SearchPipe } from './pipe/search/search.pipe';
 import { SearchforLPipe } from './pipe/searchforL/searchfor-l.pipe';
-
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -87,7 +89,9 @@ import { SearchforLPipe } from './pipe/searchforL/searchfor-l.pipe';
     MaterialModule,
     NgSelectModule,
     NgxChartsModule,
-    ChartsModule
+    ChartsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule
 
   ],
   providers: [

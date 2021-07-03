@@ -14,13 +14,13 @@
             </mat-form-field>
             <mat-form-field style="width: 100%;">
               <mat-label for="inputPassword">Contraseña</mat-label>
-              <input type="text" matInput  [(ngModel)]="user.password" name="password" #password="ngModel" required autocomplete="off">
+              <input type="password" matInput  [(ngModel)]="user.password" name="password" #password="ngModel" required autocomplete="off">
             </mat-form-field>
             <mat-form-field style="width: 100%;">
                 <mat-label for="inputEmail">Email</mat-label>
                 <input type="text" matInput [(ngModel)]="user.email" name="email" #email="ngModel" required autocomplete="off">
             </mat-form-field>
-          <button mat-raised-button  [disabled]="!register.form.valid"  color="accent" style="justify-content: center;margin-top: 15px;" type="submit">Iniciar sesión</button><br>
+          <button mat-raised-button  [disabled]="!register.form.valid"  color="accent" style="justify-content: center;margin-top: 15px;" type="submit">Registrar</button><br>
       </form>
   </mat-card>
   </div>

@@ -13,8 +13,8 @@
 
 #card1 {
     border-radius: 3px;
-    background-color:#525d8c;
-    /*background-color:transparent;*/
+    /*background-color:#525d8c;*/
+    background-color:transparent;
     margin-top: 200px;
     width: 300px;
     height: 300px;
@@ -57,8 +57,8 @@
 
 #card2{
     border-radius: 3px;
-    background-color:#525d8c;
-    /*background-color:transparent;*/
+    /*background-color:#525d8c;*/
+    background-color:transparent;
     width: 300px;
     height: 300px;
     align-items:center;

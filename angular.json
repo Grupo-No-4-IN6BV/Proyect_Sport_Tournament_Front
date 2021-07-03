@@ -1,5 +1,4 @@
 {
-
   "cli": {
     "analytics": "b8ff9c4a-9f76-47f2-8a27-4c1f9bb8ecc9"
   },
@@ -125,6 +124,10 @@
               "devServerTarget": "UI:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
     }

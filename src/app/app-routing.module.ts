@@ -29,7 +29,8 @@ const routes: Routes = [
   {path: 'not-found', component: NotFoundComponent},
   {path: ':id/table', component: TableComponent},
   {path: 'leagues', canActivate: [AdminGuard] ,component: LeagueAdminComponent},
-  {path: 'statistics', canActivate: [AdminGuard], component: statisticsAdmin}
+  {path: 'statistics', canActivate: [AdminGuard], component: statisticsAdmin},
+  {path: '**', component: NotFoundComponent}
 ];
 
 @NgModule({

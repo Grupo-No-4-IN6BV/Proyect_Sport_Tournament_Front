@@ -1,5 +1,6 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { fadeIn, largein } from 'src/app/animations/animations';
 import { League } from 'src/app/models/league';
@@ -12,7 +13,7 @@ export interface DialogData {
 
   name: string;
   id: string;
-  image: string;
+  img: string;
   idUser: string;
   role: string;
 }
@@ -69,7 +70,7 @@ export class LeagueComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(LeagueSaveComponent, {
-      height: '330px',
+      height: '425px',
       width: '400px',
     });
 
@@ -160,7 +161,7 @@ export class LeagueAdminComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(LeagueSaveComponent, {
-      height: '330px',
+      height: '425px',
       width: '400px',
     });
 
@@ -172,7 +173,7 @@ export class LeagueAdminComponent implements OnInit {
 
   openDelete(): void {
     const dialogRef = this.dialog.open(LeagueRemoveComponent, {
-      height: '200px',
+      height: '225px',
       width: '400px',
       data: {name: this.nameleagueSelected, id: this.idleagueSelected, idUser: this.leagueSelected.user, role:'Admin'}
     });
@@ -184,9 +185,9 @@ export class LeagueAdminComponent implements OnInit {
 
   openUpdate(): void {
     const dialogRef = this.dialog.open(LeagueUpdateComponent, {
-      height: '450px',
-      width: '800px',
-      data: {name: this.nameleagueSelected, id: this.idleagueSelected, idUser: this.leagueSelected.user, role:'Admin'}
+      height: '415px',
+      width: '400px',
+      data: {name: this.nameleagueSelected, img: this.imageleagueSelected, id: this.idleagueSelected, idUser: this.leagueSelected.user, role:'Admin'}
     });
     dialogRef.afterClosed().subscribe(result => {
       this.ngOnInit();
@@ -216,7 +217,7 @@ export class LeagueUpdateComponent implements OnInit {
   
 
   constructor(public dialogRef: MatDialogRef<LeagueUpdateComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, private restUser:RestUserService,  private restLeague:RestLeagueService){}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private restUser:RestUserService,  private restLeague:RestLeagueService, public snackBar: MatSnackBar){}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -225,8 +226,13 @@ export class LeagueUpdateComponent implements OnInit {
   updateLeague(){
     this.restLeague.updateLeague(this.data.idUser, this.data).subscribe((res:any)=>{
       if(res.userLeagueAct){
-        alert(res.message)
         this.user= res.userLeagueAct
+        this.snackBar.open('Liga actualizada correctamente', 'Cerrar', {
+          duration: 2000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['mat-toolbar', 'mat-accent']
+        });
         if(this.data.role == 'Admin'){
           this.dialogRef.close();
         }else{
@@ -235,7 +241,6 @@ export class LeagueUpdateComponent implements OnInit {
         }
         
       }else{
-        alert(res.message);
         this.user = this.restUser.getUser()
         this.leagues = this.user.leagues;
       }
@@ -260,7 +265,7 @@ export class LeagueRemoveComponent implements OnInit {
   
 
   constructor(public dialogRef: MatDialogRef<LeagueRemoveComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, private restUser:RestUserService,  private restLeague:RestLeagueService){}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private restUser:RestUserService,  private restLeague:RestLeagueService, public snackBar: MatSnackBar){}
 
 
   ngOnInit(): void {
@@ -272,7 +277,12 @@ export class LeagueRemoveComponent implements OnInit {
   removeLeague(){
     this.restLeague.removeLeague(this.data.idUser, this.data.id).subscribe((res:any)=>{
       if(res.leaguePull){
-        alert(res.message);
+        this.snackBar.open('Liga eliminada correctamente', 'Cerrar', {
+          duration: 2000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['mat-toolbar', 'mat-accent']
+        });
         if(this.data.role == 'Admin'){
           this.dialogRef.close();
         }else{
@@ -312,19 +322,30 @@ export class LeagueSaveComponent implements OnInit {
 
   }
 
-  constructor(private restUser:RestUserService, private router:Router, private restLeague:RestLeagueService) {
+  constructor(public dialogRef: MatDialogRef<LeagueSaveComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,private restUser:RestUserService, private router:Router, private restLeague:RestLeagueService, public snackBar: MatSnackBar) {
     this.league = new League('','','',[], '');
     this.user = JSON.parse(localStorage.getItem('user'));
    }
 
+
+   onNoClick(): void {
+    this.dialogRef.close();
+  }
+
   onSubmit(saveLeague){
     this.restLeague.saveLeague(this.user._id, this.league).subscribe((res:any)=>{
       if(res.userFind2){
-        alert(res.message)
         saveLeague.reset()
         delete res.pushLeague.password;
         this.user = res.userFind2;
         localStorage.setItem('user', JSON.stringify(this.user));
+        this.snackBar.open('Liga creada correctamente', 'Cerrar', {
+          duration: 2000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['mat-toolbar', 'mat-accent']
+        });
       }else{
         alert(res.message)
       }

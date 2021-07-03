@@ -71,7 +71,7 @@ export class StatisticsComponent implements OnInit {
   legendPosition: string = 'right';
 
   colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+    domain: ['#DC9750', '#4B8378', '#F9D030', '#59981A', '#BD97CB', '#66D2D6', '#189AB4', '#2F2440', '#C6B79B', '#0B1C48']
   };
 
 

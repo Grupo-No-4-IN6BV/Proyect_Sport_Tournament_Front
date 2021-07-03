@@ -20,6 +20,7 @@ export class AdminGuard implements CanActivate {
           return false;
         }else {
           this.router.navigateByUrl('home');
+          localStorage.clear();
           return false;
         }
       }

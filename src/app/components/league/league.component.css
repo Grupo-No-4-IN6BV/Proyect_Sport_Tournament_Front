@@ -1,11 +1,70 @@
 .example-card {
-    max-width: 300px;
+    width: 300px;
+    max-height: 330px;
     margin-top: 15px;
+    
   }
   
   .example-header-image {
     background-image: url('https://studio.cults3d.com/4QqRV9kLYYEuw9ur_X3yjQl1sjk=/516x516/https://files.cults3d.com/uploaders/15024335/illustration-file/a86d53e4-2bd9-4a8f-9550-986686c3131a/gi0mAjIh_400x400.png');
     background-size: cover;
+  }
+
+  #prevImg1{
+    align-items:center;
+  }
+
+  #prevTxt{
+    justify-content:center;
+    align-items:center;
+    display: flex;
+    font-family: "Courier New", Courier, monospace;  
+  }
+
+  #prevImg{
+    padding: 5px;
+    min-width: 90px;
+    min-height: 90px;
+    justify-content:center;
+    align-items:center;
+    max-width: 130px;
+    max-height: 130px;
+    display: flex;
+    margin-left: 110px;
+  }
+
+  #imgCardUp{
+    margin: 15px;
+    min-width: 90px;
+    max-width: 108px;
+    max-height: 108px;
+    justify-content:center;
+    align-items:center;
+  }
+
+
+  #imgCard{
+    margin: 20px;
+    min-width: 150px;
+    max-width: 170px;
+    max-height: 170px;
+  }
+
+  #divImgKekw{
+    margin-inline: 50px;
+    padding: 15px;
+    min-width: 170px;
+    min-height: 170px;
+    justify-content:center;
+    align-items:center;
+    max-width: 170px;
+    max-height: 170px;
+    display: flex;
+  }
+
+  #txtdef{
+    
+    margin-bottom: 10px;
   }
 
   .mat-fab{
@@ -14,12 +73,21 @@
 
   .txtleague{
     font-family: "Trebuchet MS", Helvetica, sans-serif;
+
   }
  
+  #div{
+    justify-content:center;
+    align-items:center;
+  }
+
 
   #cardP{
+    justify-content:center;
+    align-items:center;
     background-color: rgb(30, 39, 70);
   }
+
 
   h2{
     align-items: center;
@@ -66,3 +134,4 @@
       background-position: 0% 50%;
     }
   }
+

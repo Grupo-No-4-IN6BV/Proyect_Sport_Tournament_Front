@@ -1,3 +1,3 @@
 export const CONNECTION = {
-    URI: 'http://localhost:3800/api/'
+    URI: 'https://torneo-g4-back.herokuapp.com/api/'
 }

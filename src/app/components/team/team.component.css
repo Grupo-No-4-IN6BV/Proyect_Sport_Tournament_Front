@@ -3,6 +3,8 @@
     position: relative;
     border-radius: var(--borderWidth);
   }
+
+
   .gradient-border:after {
     content: '';
     position: absolute;
@@ -64,4 +66,92 @@
 	background-color: #D62929;
 }
 
+#divKEKWTeamsGeneral{
+    justify-items: center;
+    align-items: center;
+    justify-items: center;
+}
+
+#divKEKWTeams{
+    justify-items: center;
+    align-items: center;
+    justify-items: center;
+    display: inline-block;
+}
+
+#cardTeams{
+    width: 610px;
+    margin-top: 20px;
+    padding: 10px;
+    min-height: 90px;
+}
+
+#prevTxt{
+    justify-content:center;
+    align-items:center;
+    display: flex;
+    font-family: "Courier New", Courier, monospace;  
+  }
+
+#btnMarker{
+    width: 300px;
+    height: 35px;
+    align-items: center;
+    text-align: center;
+    background-color:#7CB7AF;
+    border-radius: 5px;
+}
+
+#btnDiv{
+    align-items: center;
+    text-align: center;
+    margin-top: 15px;
+}
+
+#jornadaSelect{
+    align-items: center;
+    text-align: center;
+}
+
+#titlemarker{
+    align-items: center;
+    text-align: center;
+    font-size: 19px;
+    color: mintcream;
+    padding: 10px;
+}
+
+
+#prevImg1{
+    align-items:center;
+  }
+
+
+#prevTxt{
+    justify-content:center;
+    align-items:center;
+    display: flex;
+    font-family: "Courier New", Courier, monospace;  
+  }
+
+  #prevImg{
+    padding: 15px;
+    min-width: 90px;
+    min-height: 90px;
+    justify-content:center;
+    align-items:center;
+    max-width: 105px;
+    max-height: 105px;
+    display: flex;
+    margin-left: 110px;
+  }
+
+  #imgCardUp{
+    margin: 20px;
+    min-width: 90px;
+    max-width: 105px;
+    max-height: 105px;
+    justify-content:center;
+    align-items:center;
+  }
 

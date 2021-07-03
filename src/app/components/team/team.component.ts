@@ -87,7 +87,7 @@ export class TeamComponent implements OnInit {
     console.log(i)
     if(i>=10){
       console.log(i)
-      this.snackBar.open('error ', 'cerrar', {
+      this.snackBar.open('Limite de equipos alcanzado', 'cerrar', {
         duration: 2000,
         horizontalPosition: 'center',
         verticalPosition: 'bottom',
@@ -100,14 +100,55 @@ export class TeamComponent implements OnInit {
     }
   }
 
+
   getJorn(i){
     this.jornada = i;
-    this.openMarker()
+    if(i<=1){
+      console.log(i)
+      this.snackBar.open('Agregue minimo 2 equipos', 'cerrar', {
+        duration: 2000,
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom',
+        panelClass: ['mat-toolbar', 'mat-warn']
+      });
+    }else{
+      this.openMarker()
+    }
+  }
+
+  getGotable(i){
+    this.jornada = i;
+    if(i<=1){
+      console.log(i)
+      this.snackBar.open('Agregue minimo 2 equipos', 'cerrar', {
+        duration: 2000,
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom',
+        panelClass: ['mat-toolbar', 'mat-warn']
+      });
+    }else{
+      this.goTable()
+    }
+  }
+
+  getGostatics(i){
+    this.jornada = i;
+    if(i<=1){
+      console.log(i)
+      this.snackBar.open('Agregue minimo 2 equipos', 'cerrar', {
+        duration: 2000,
+        horizontalPosition: 'center',
+        verticalPosition: 'bottom',
+        panelClass: ['mat-toolbar', 'mat-warn']
+      });
+    }else{
+      this.goStastics()
+    }
   }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(TeamSaveComponent, {
-      height: '330px',
+      height: '425px',
       width: '400px',
       data: {idLeague:this.idLeague}
     });
@@ -117,9 +158,8 @@ export class TeamComponent implements OnInit {
   }
 
   openDelete(): void {
-    console.log('llega aqui');
     const dialogRef = this.dialog.open(TeamRemoveComponent, {
-      height: '200px',
+      height: '225px',
       width: '400px',
       data: {name: this.nameteamSelected, id: this.idteamSelected, idLeague: this.idLeague}
     });
@@ -131,8 +171,8 @@ export class TeamComponent implements OnInit {
 
   openMarker(): void {
     const dialogRef = this.dialog.open(TeamMarkerComponent, {
-      height: '500px',
-      width: '700px',
+      height: '350px',
+      width: '485px',
       data: {jornada: this.jornada,idLeague:this.idLeague}
     });
       dialogRef.afterClosed().subscribe(result => {
@@ -142,9 +182,9 @@ export class TeamComponent implements OnInit {
 
   openUpdate(): void {
     const dialogRef = this.dialog.open(TeamUpdateComponent, {
-      height: '450px',
-      width: '800px',
-      data: {name: this.nameteamSelected, id: this.idteamSelected, idLeague:this.idLeague}
+      height: '425px',
+      width: '400px',
+      data: {name: this.nameteamSelected, id: this.idteamSelected, idLeague:this.idLeague, image: this.imageteamSelected}
     });
     dialogRef.afterClosed().subscribe(result => {
       this.ngOnInit();
@@ -254,9 +294,7 @@ export class TeamMarkerComponent implements OnInit {
       this.match.goalsf=this.goals1;
       this.match.matchCount=1;
       this.setMatch()
-      
     }else if(this.goals1 > this.goals2){
-
       this.idTeam = this.selected1
       this.match.idLoser = this.selected2;
       this.match.idMatch = this.jornadaSelect;
@@ -273,10 +311,17 @@ export class TeamMarkerComponent implements OnInit {
   setMatch(){
 
     this.restTeam.updateMatch(this.league._id, this.idTeam, this.match).subscribe((res:any)=>{
-      if(res.pushMatch){
-        console.log('si se pudo we')
+      if(res){
+        this.snackBar.open(res.message, 'cerrar', {
+          duration: 2000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['mat-toolbar', 'mat-accent']
+        });
+
       }else{
-        alert(res.message)
+        alert('error indefinido')
+        
       }
     },
     error=> alert(error.error.message))
@@ -307,7 +352,7 @@ export class TeamSaveComponent implements OnInit {
   }
 
   constructor(public dialogRef: MatDialogRef<TeamSaveComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: teamData, private restLeague: RestLeagueService, private restUser: RestUserService, private router:Router, private restTeam:RestTeamService, public dialog: MatDialog, private route:ActivatedRoute) { }
+    @Inject(MAT_DIALOG_DATA) public data: teamData, private restLeague: RestLeagueService, private restUser: RestUserService, private router:Router, private restTeam:RestTeamService, public dialog: MatDialog, private route:ActivatedRoute, public snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.team = new Team('','','',0)
@@ -327,7 +372,12 @@ export class TeamSaveComponent implements OnInit {
     this.team.count = this.count
     this.restTeam.saveTeam(this.user._id,this.data.idLeague, this.team).subscribe((res:any)=>{
       if(res.pushTeam){
-        alert(res.message)
+        this.snackBar.open(res.message, 'cerrar', {
+          duration: 2000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['mat-toolbar', 'mat-accent']
+        });
         saveTeam.reset()
         this.league = res.pushTeam;
         this.user = res.userFind;
@@ -355,7 +405,7 @@ export class TeamRemoveComponent implements OnInit {
   user;
 
   constructor(public dialogRef: MatDialogRef<TeamRemoveComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: teamData,  private restLeague:RestLeagueService,private restUser: RestUserService, private restTeam:RestTeamService){}
+    @Inject(MAT_DIALOG_DATA) public data: teamData,  private restLeague:RestLeagueService,private restUser: RestUserService, private restTeam:RestTeamService, public snackBar: MatSnackBar){}
 
 
   ngOnInit(): void {
@@ -368,9 +418,15 @@ export class TeamRemoveComponent implements OnInit {
     console.log(this.data.idLeague);
     this.restTeam.removeTeam(this.data.idLeague, this.data.id).subscribe((res:any)=>{
       if(res.matchdelete){
-        alert(res.message);
-
+        this.onNoClick()
+        this.snackBar.open('equipo eliminado', 'cerrar', {
+          duration: 2000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['mat-toolbar', 'mat-warn']
+        });
         this.teams = this.league.teams;
+
       }else{
         alert(res.message);
       }
@@ -408,7 +464,7 @@ export class TeamUpdateComponent implements OnInit {
     this.user = this.restUser.getUser();
     this.restTeam.updateTeam(this.user._id,this.data.idLeague, this.data).subscribe((res:any)=>{
       if(res.updateTeam){
-        this.snackBar.open('Actualizado', 'cerrar', {
+        this.snackBar.open(res.message, 'cerrar', {
           duration: 2000,
           horizontalPosition: 'center',
           verticalPosition: 'top',
@@ -416,7 +472,13 @@ export class TeamUpdateComponent implements OnInit {
         });
         this.dialogRef.close();
       }else{
-        alert(res.message);
+        this.snackBar.open(res.message, 'cerrar', {
+          duration: 2000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top',
+          panelClass: ['mat-toolbar', 'mat-accent']
+        });
+        this.dialogRef.close();
       }
     },
     error => alert(error.error.message))
