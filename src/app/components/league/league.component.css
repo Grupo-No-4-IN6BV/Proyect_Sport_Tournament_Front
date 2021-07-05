@@ -5,6 +5,36 @@
     
   }
   
+  input[type="file"]{
+    display: none;
+  }
+
+  #lblbtn{
+    color:white;
+    height: 40px;
+    width: 250px;
+    background-color: #8164d9;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-size: 15;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Montserrat", sans-serif;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+
+  #elInputDeAndre{
+    margin-top: 30px;
+    align-items: center;
+    margin-bottom: 380px;
+  }
+
+
   .example-header-image {
     background-image: url('https://studio.cults3d.com/4QqRV9kLYYEuw9ur_X3yjQl1sjk=/516x516/https://files.cults3d.com/uploaders/15024335/illustration-file/a86d53e4-2bd9-4a8f-9550-986686c3131a/gi0mAjIh_400x400.png');
     background-size: cover;

@@ -1,7 +1,11 @@
 import { Component, Inject, OnInit, ViewEncapsulation } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { fadeIn, largein } from 'src/app/animations/animations';
 import { Match } from 'src/app/models/match';
 import { Team } from 'src/app/models/team';
@@ -148,7 +152,7 @@ export class TeamComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(TeamSaveComponent, {
-      height: '425px',
+      height: '435px',
       width: '400px',
       data: {idLeague:this.idLeague}
     });
@@ -182,7 +186,7 @@ export class TeamComponent implements OnInit {
 
   openUpdate(): void {
     const dialogRef = this.dialog.open(TeamUpdateComponent, {
-      height: '425px',
+      height: '445px',
       width: '400px',
       data: {name: this.nameteamSelected, id: this.idteamSelected, idLeague:this.idLeague, image: this.imageteamSelected}
     });
@@ -344,6 +348,8 @@ export class TeamSaveComponent implements OnInit {
   user;
   public team: Team;
   count:number;
+  private image: any;
+  isChecked = true;
 
   idLeague;
 
@@ -352,7 +358,11 @@ export class TeamSaveComponent implements OnInit {
   }
 
   constructor(public dialogRef: MatDialogRef<TeamSaveComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: teamData, private restLeague: RestLeagueService, private restUser: RestUserService, private router:Router, private restTeam:RestTeamService, public dialog: MatDialog, private route:ActivatedRoute, public snackBar: MatSnackBar) { }
+    @Inject(MAT_DIALOG_DATA) public data: teamData, private restLeague: RestLeagueService, 
+    private restUser: RestUserService, private router:Router, 
+    private restTeam:RestTeamService, public dialog: MatDialog, 
+    private route:ActivatedRoute, public snackBar: MatSnackBar,
+    private afs: AngularFirestore, private storage: AngularFireStorage) { }
 
   ngOnInit(): void {
     this.team = new Team('','','',0)
@@ -366,10 +376,15 @@ export class TeamSaveComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  clean(){
+    this.team.image = ''
+  }
+
   onSubmit(saveTeam){
     this.user = this.restUser.getUser();
     this.count =this.count+1
-    this.team.count = this.count
+    this.team.count = this.count;
+    
     this.restTeam.saveTeam(this.user._id,this.data.idLeague, this.team).subscribe((res:any)=>{
       if(res.pushTeam){
         this.snackBar.open(res.message, 'cerrar', {
@@ -382,11 +397,71 @@ export class TeamSaveComponent implements OnInit {
         this.league = res.pushTeam;
         this.user = res.userFind;
         localStorage.setItem('user', JSON.stringify(this.user))
+        this.dialogRef.close();
       }else{
         alert(res.message)
       }
+      
     },
     error=> alert(error.error.message))
+    
+  }
+
+
+  private filePath: any;
+  private downloadURL: Observable<string>
+/*
+  onSubmit(saveTeam){
+    this.user = this.restUser.getUser();
+    this.count =this.count+1
+    this.team.count = this.count;
+
+    this.filePath = `images/${this.image.name}`
+    const fileRef = this.storage.ref(this.filePath);
+    const task = this.storage.upload(this.filePath, this.image)
+    return task.snapshotChanges()
+    .pipe(
+      finalize(()=>{
+        fileRef.getDownloadURL().subscribe( urlImage => {
+          this.restTeam.saveTeam(this.user._id,this.data.idLeague, this.team, urlImage).subscribe((res:any)=>{
+            if(res.pushTeam){
+              this.snackBar.open(res.message, 'cerrar', {
+                duration: 2000,
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+                panelClass: ['mat-toolbar', 'mat-accent']
+              });
+              this.dialogRef.close();
+
+            }else{
+              alert(res.message)
+            }
+            
+          },
+          error=> alert(error.error.message))
+          
+
+        })
+      })
+    ).subscribe();
+  }
+    */
+  
+
+  handleImage(event:any){
+    this.image = event.target.files[0]
+
+    this.filePath = `images/${this.image.name}`
+    const fileRef = this.storage.ref(this.filePath);
+    const task = this.storage.upload(this.filePath, this.image)
+    return task.snapshotChanges()
+    .pipe(
+      finalize(()=>{
+        fileRef.getDownloadURL().subscribe( urlImage => { 
+          this.team.image = urlImage
+        })
+      })
+    ).subscribe();
   }
   
 }
@@ -447,14 +522,22 @@ export class TeamUpdateComponent implements OnInit {
   league;
   teams:[];
   user;
+  private image: any;
+  isChecked = true;
 
 
   constructor(public dialogRef: MatDialogRef<TeamUpdateComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: teamData, private restTeam:RestTeamService,  private restLeague:RestLeagueService, private restUser:RestUserService, public snackBar: MatSnackBar){}
+    @Inject(MAT_DIALOG_DATA) public data: teamData, private restTeam:RestTeamService,  
+    private restLeague:RestLeagueService, private restUser:RestUserService, 
+    public snackBar: MatSnackBar,private storage: AngularFireStorage){
+      
+    }
     
   ngOnInit(): void {
  
   }
+
+
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -482,6 +565,27 @@ export class TeamUpdateComponent implements OnInit {
       }
     },
     error => alert(error.error.message))
+  }
+
+  
+  
+  private filePath: any;
+  private downloadURL: Observable<string>
+
+  handleImage(event:any){
+    this.image = event.target.files[0]
+
+    this.filePath = `images/${this.image.name}`
+    const fileRef = this.storage.ref(this.filePath);
+    const task = this.storage.upload(this.filePath, this.image)
+    return task.snapshotChanges()
+    .pipe(
+      finalize(()=>{
+        fileRef.getDownloadURL().subscribe( urlImage => { 
+          this.data.image = urlImage
+        })
+      })
+    ).subscribe();
   }
   
 }

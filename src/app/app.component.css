@@ -7,7 +7,8 @@ html, body { height: 100%; }
 
 body{
   /*  background-image: url("https://i.imgur.com/lLfM33a.gif");*/
-    background-image: url("https://steamuserimages-a.akamaihd.net/ugc/875244468225515264/214231A4122AC0492F8EE017FF003FAF512A53A7/");
+    background-image: url(../assets/img/fondo.gif);
+ 
     /*background-image: url("https://64.media.tumblr.com/896b21ac5f8ad4b46cfac9a216b0657a/tumblr_ogqsxoRtme1rldv4go1_1280.gifv");*/
     /*background-image: url("https://64.media.tumblr.com/785d2a9fcde0637d6f092439e5a5b042/tumblr_oqgsdx2GPF1rldv4go1_1280.gifv");*/
     background-position: center center;

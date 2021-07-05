@@ -30,13 +30,15 @@ import { TableComponent } from './components/table/table.component';
 import { OrderbyPPipe } from './pipe/orderbyP/orderby-p.pipe';
 import { SearchPipe } from './pipe/search/search.pipe';
 import { SearchforLPipe } from './pipe/searchforL/searchfor-l.pipe';
-import { AngularFireModule } from '@angular/fire';
+
+
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
 
 
-
-
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule, BUCKET} from '@angular/fire/storage'
+import { AngularFireModule } from '@angular/fire';
 
 @NgModule({
   declarations: [
@@ -91,10 +93,13 @@ import { environment } from 'src/environments/environment';
     NgxChartsModule,
     ChartsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule
 
   ],
   providers: [
+    {provide: BUCKET, useValue: 'gs://torneoswebg4.appspot.com'}
   ],
   
   bootstrap: [AppComponent],

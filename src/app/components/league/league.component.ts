@@ -1,7 +1,10 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { fadeIn, largein } from 'src/app/animations/animations';
 import { League } from 'src/app/models/league';
 import { Team } from 'src/app/models/team';
@@ -13,7 +16,7 @@ export interface DialogData {
 
   name: string;
   id: string;
-  img: string;
+  image: string;
   idUser: string;
   role: string;
 }
@@ -55,9 +58,7 @@ export class LeagueComponent implements OnInit {
     this.leagueSelected = league;
     this.nameleagueSelected = this.leagueSelected.name;
     this.idleagueSelected = this.leagueSelected._id;
-    this.imageleagueSelected = this.leagueSelected.user;
-
-
+    this.imageleagueSelected = this.leagueSelected.image;
   }
 
   goTeam(league){
@@ -70,7 +71,7 @@ export class LeagueComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(LeagueSaveComponent, {
-      height: '425px',
+      height: '435px',
       width: '400px',
     });
 
@@ -82,7 +83,7 @@ export class LeagueComponent implements OnInit {
 
   openDelete(): void {
     const dialogRef = this.dialog.open(LeagueRemoveComponent, {
-      height: '200px',
+      height: '215px',
       width: '400px',
       data: {name: this.nameleagueSelected, id: this.idleagueSelected, idUser: this.user._id}
     });
@@ -94,9 +95,9 @@ export class LeagueComponent implements OnInit {
 
   openUpdate(): void {
     const dialogRef = this.dialog.open(LeagueUpdateComponent, {
-      height: '450px',
-      width: '800px',
-      data: {name: this.nameleagueSelected, id: this.idleagueSelected, idUser: this.user._id}
+      height: '465px',
+      width: '400px',
+      data: {name: this.nameleagueSelected, id: this.idleagueSelected, idUser: this.user._id, image:this.imageleagueSelected}
     });
     dialogRef.afterClosed().subscribe(result => {
       this.ngOnInit();
@@ -185,9 +186,9 @@ export class LeagueAdminComponent implements OnInit {
 
   openUpdate(): void {
     const dialogRef = this.dialog.open(LeagueUpdateComponent, {
-      height: '415px',
+      height: '465px',
       width: '400px',
-      data: {name: this.nameleagueSelected, img: this.imageleagueSelected, id: this.idleagueSelected, idUser: this.leagueSelected.user, role:'Admin'}
+      data: {name: this.nameleagueSelected, img: this.imageleagueSelected, id: this.idleagueSelected, idUser: this.leagueSelected.user, role:'Admin',  image:this.imageleagueSelected}
     });
     dialogRef.afterClosed().subscribe(result => {
       this.ngOnInit();
@@ -208,6 +209,9 @@ export class LeagueUpdateComponent implements OnInit {
 
   leagues:[];
   user;
+  isChecked = true;
+  private image: any;
+
 
   ngOnInit(): void {
     this.user = this.restUser.getUser();
@@ -217,7 +221,9 @@ export class LeagueUpdateComponent implements OnInit {
   
 
   constructor(public dialogRef: MatDialogRef<LeagueUpdateComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData, private restUser:RestUserService,  private restLeague:RestLeagueService, public snackBar: MatSnackBar){}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData, private restUser:RestUserService,  
+    private restLeague:RestLeagueService, public snackBar: MatSnackBar,
+    private storage: AngularFireStorage){}
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -248,6 +254,26 @@ export class LeagueUpdateComponent implements OnInit {
     error => alert(error.error.message))
   }
   
+
+  
+  private filePath: any;
+  private downloadURL: Observable<string>
+
+  handleImage(event:any){
+    this.image = event.target.files[0]
+
+    this.filePath = `images/${this.image.name}`
+    const fileRef = this.storage.ref(this.filePath);
+    const task = this.storage.upload(this.filePath, this.image)
+    return task.snapshotChanges()
+    .pipe(
+      finalize(()=>{
+        fileRef.getDownloadURL().subscribe( urlImage => { 
+          this.data.image = urlImage
+        })
+      })
+    ).subscribe();
+  }
 }
 
 @Component({
@@ -283,6 +309,7 @@ export class LeagueRemoveComponent implements OnInit {
           verticalPosition: 'top',
           panelClass: ['mat-toolbar', 'mat-accent']
         });
+        this.dialogRef.close();
         if(this.data.role == 'Admin'){
           this.dialogRef.close();
         }else{
@@ -315,6 +342,12 @@ export class LeagueSaveComponent implements OnInit {
   public leagueLogg;
   public token;
   public user;
+  isChecked = true;
+  private image: any;
+
+  clean(){
+    this.league.image = ''
+  }
 
   ngOnInit(): void {
     this.user = this.restUser.getUser();
@@ -323,7 +356,9 @@ export class LeagueSaveComponent implements OnInit {
   }
 
   constructor(public dialogRef: MatDialogRef<LeagueSaveComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,private restUser:RestUserService, private router:Router, private restLeague:RestLeagueService, public snackBar: MatSnackBar) {
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,private restUser:RestUserService, 
+    private router:Router, private restLeague:RestLeagueService, public snackBar: MatSnackBar,
+    private storage: AngularFireStorage) {
     this.league = new League('','','',[], '');
     this.user = JSON.parse(localStorage.getItem('user'));
    }
@@ -346,11 +381,31 @@ export class LeagueSaveComponent implements OnInit {
           verticalPosition: 'top',
           panelClass: ['mat-toolbar', 'mat-accent']
         });
+        this.dialogRef.close();
       }else{
         alert(res.message)
       }
     },
     error=> alert(error.error.message))
+  }
+
+  private filePath: any;
+  private downloadURL: Observable<string>
+
+  handleImage(event:any){
+    this.image = event.target.files[0]
+
+    this.filePath = `images/${this.image.name}`
+    const fileRef = this.storage.ref(this.filePath);
+    const task = this.storage.upload(this.filePath, this.image)
+    return task.snapshotChanges()
+    .pipe(
+      finalize(()=>{
+        fileRef.getDownloadURL().subscribe( urlImage => { 
+          this.league.image = urlImage
+        })
+      })
+    ).subscribe();
   }
 }
 

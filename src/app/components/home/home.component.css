@@ -148,3 +148,14 @@ animation-timing-function: steps(2, end);
 }
 
 
+#body{
+  /*  background-image: url("https://i.imgur.com/lLfM33a.gif");*/
+    background-image: url("../../../assets/img/fondo.gif");
+ 
+    /*background-image: url("https://64.media.tumblr.com/896b21ac5f8ad4b46cfac9a216b0657a/tumblr_ogqsxoRtme1rldv4go1_1280.gifv");*/
+    /*background-image: url("https://64.media.tumblr.com/785d2a9fcde0637d6f092439e5a5b042/tumblr_oqgsdx2GPF1rldv4go1_1280.gifv");*/
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}

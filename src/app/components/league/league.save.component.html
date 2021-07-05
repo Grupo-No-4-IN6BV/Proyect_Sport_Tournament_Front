@@ -4,12 +4,29 @@
     
       <input matInput type="text" [(ngModel)]="league.name" type="text" id="passwordRemoved" name="name" placeholder="Nombre de Liga" autocomplete="off">
     </mat-form-field>
-    <mat-form-field  class="example-form-field" style="margin-left: 20px; width: 90%;">
+    <div class="row" style="text-align: center;">
+      <div class="col-lg-4">
+        <p >URL</p>
+      </div>
+      <div class="col-lg-4">
+        <mat-slide-toggle  [(ngModel)]="isChecked" name="isChecked" (click)="clean()"></mat-slide-toggle>
+      </div>
+      <div class="col-lg-3" style="margin-left: 15px; text-align: left;">
+        <p>imagen</p>
+      </div>
+    </div>
+    <mat-form-field  class="example-form-field" style="margin-left: 20px; width: 90%;" *ngIf="isChecked == false" >
       <input matInput type="text" [(ngModel)]="league.image" type="test" id="passwordRemoved" name="name" placeholder="URL de Imagen" autocomplete="off">
       
-    </mat-form-field><br><br>
+    </mat-form-field><br>
 
-
+    <div id="sisoi" class="container-input-file" *ngIf="isChecked == true"  >
+      <input id="elInputDeAndre" id="file" type="file" accept="image/png, .jpeg, .jpg, image/gif"  (change)="handleImage($event)">
+      <label id="lblbtn" for="file">
+        <i class="material-icons">add_photo_alternate</i>&nbsp;
+        Subir imagen
+      </label>
+    </div><br>
     <div id="prevTxt">
       <p>Previsualización</p>
     </div>

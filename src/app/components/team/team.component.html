@@ -17,7 +17,7 @@
                     <h2>{{i+1}}) {{team.name}}</h2>
                 </div>
                 <div class="col-lg-2" style="text-align: center;">
-                    <img src="{{team.image}}" alt="" style="width: 80px;" >
+                    <img id="cardTeamImg" src="{{team.image}}" alt="" >
                 </div>
                 <div class="col-lg-4" style="text-align: end;">
                     <button  mat-mini-fab style="background-color: #ccc42d; margin-right: 15px;" (click)="getTeam(team)" (click)="openUpdate()">

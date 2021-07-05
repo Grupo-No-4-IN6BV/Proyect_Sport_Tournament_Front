@@ -1,6 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { Observable } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
+import { FileI } from 'src/app/models/file';
 import { CONNECTION } from '../global';
 import { RestUserService } from '../restUser/rest-user.service';
 
@@ -14,6 +18,9 @@ export class RestTeamService {
   public league;
   public team;
   public uri: string;
+  private filePath: any;
+  private downloadURL: Observable<string>
+
   public httpOptionsAuth = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -24,7 +31,7 @@ export class RestTeamService {
     let body = res;
     return body || [] || {};
   }
-  constructor(private restUser:RestUserService, private http:HttpClient) {
+  constructor(private restUser:RestUserService, private http:HttpClient, private afs: AngularFirestore, private storage: AngularFireStorage) {
     this.uri = CONNECTION.URI;
    }
 
@@ -43,7 +50,10 @@ export class RestTeamService {
       'Content-Type': 'application/json',
       'Authorization': this.getToken()
     })
+
+
     let params = JSON.stringify(team);
+
     return this.http.put(this.uri+idUser+'/'+idLeague+'/setTeam', params,  {headers: headers})
     .pipe(map(this.extractData))
   }
@@ -103,6 +113,20 @@ export class RestTeamService {
     });
     return this.http.put(this.uri+'getLeague/'+idLeague, null,{headers: headers})
      .pipe(map(this.extractData)) 
+  }
+
+  uploadImage(idUser,idLeague, team, image: FileI){
+    this.filePath = `images/${image.name}`
+    const fileRef = this.storage.ref(this.filePath);
+    const task = this.storage.upload(this.filePath, image)
+    return task.snapshotChanges()
+    .pipe(
+      finalize(()=>{
+        fileRef.getDownloadURL().subscribe( urlImage => {
+          this.downloadURL = urlImage
+        })
+      })
+    ).subscribe();
   }
 }
 
